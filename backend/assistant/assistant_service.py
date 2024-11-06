@@ -33,4 +33,4 @@ async def handle_audio_from_user(file: bytes) -> str:
         file_suffix='ai_audio_reply.mp3'
     )
 
-    return output_audio_local_file_path
+    return ("Audio saved at:", output_audio_local_file_path)
