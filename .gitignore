@@ -1,0 +1,29 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore environment files
+.env
+
+# Ignore temporary files and directories
+/temp_audio_files/
+*.tmp
+*.log
+
+# Ignore audio files (optional, if you don’t want to version control them)
+*.mp3
+*.wav
+*.m4a
+
+# Ignore virtual environment folder
+venv/
+.venv/
+
+# Ignore Docker-related files (if applicable)
+*.dockerfile
+docker-compose.yml
+
+# Ignore IDE/editor config files
+.vscode/
+.idea/
