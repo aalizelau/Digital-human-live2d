@@ -1,8 +1,8 @@
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
-from transcoding.transcoding_service import convert_file_to_readable_mp3
-from audio_handling.audio_transcription_service import convert_audio_to_text
-from chat.chat_service import handle_get_response_for_user
-from audio_handling.audio_generation_service import convert_text_to_audio
+from helper import convert_file_to_readable_mp3
+from helper import convert_audio_to_text
+from helper import handle_get_response_for_user
+from helper import convert_text_to_audio
 
 
 def __get_transcoded_audio_file_path(data: bytes) -> str:
