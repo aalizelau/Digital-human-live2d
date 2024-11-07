@@ -1,3 +1,4 @@
+import asyncio
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from helper import convert_file_to_readable_mp3
 from helper import convert_audio_to_text
@@ -24,8 +25,7 @@ async def handle_audio_from_user(file: bytes) -> str:
     """
     print("handle audio from user")
     transcoded_user_audio_file_path = __get_transcoded_audio_file_path(file)
-    transcript_content_text = convert_audio_to_text(transcoded_user_audio_file_path)
-    text_content = transcript_content_text['text']
+    text_content = convert_audio_to_text(transcoded_user_audio_file_path)
     ai_text_reply = handle_get_response_for_user(text_content)
     generated_audio_ai = convert_text_to_audio(ai_text_reply)
     output_audio_local_file_path = persist_binary_file_locally(
@@ -34,3 +34,10 @@ async def handle_audio_from_user(file: bytes) -> str:
     )
 
     return ("Audio saved at:", output_audio_local_file_path)
+
+if __name__ == "__main__":
+    with open("/Users/funlau/Documents/ChatCampus/backend/audio/test_for_all.mp3", "rb") as f:
+        mp3_data = f.read()
+
+    # Running the async function in synchronous context for testing
+    asyncio.run(handle_audio_from_user(mp3_data))
