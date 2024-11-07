@@ -5,7 +5,8 @@ import os
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-llm = OpenAI(openai_api_key=openai_api_key, temperature=0.5)
-prompt = "What are the benefits of using LangChain with OpenAI?"
-response = llm(prompt)
-print(response)
+def handle_get_response_for_user(user_prompt: str) -> str:
+
+    llm = OpenAI(openai_api_key=openai_api_key, temperature=0.5)
+    response = llm(user_prompt)
+    print(response)
