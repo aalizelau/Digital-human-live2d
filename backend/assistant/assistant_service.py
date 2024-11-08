@@ -30,11 +30,11 @@ async def handle_audio_from_user(file: bytes) -> str:
     print("ai_text_reply: ", ai_text_reply)
     output_audio_local_file_path = convert_text_to_audio(ai_text_reply)
 
-    return ("Audio saved at:", output_audio_local_file_path)
+    return output_audio_local_file_path
 
-if __name__ == "__main__":
-    with open("/Users/funlau/Documents/ChatCampus/backend/audio/test_for_all.mp3", "rb") as f:
-        mp3_data = f.read()
+# if __name__ == "__main__":
+#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/test_for_all.mp3", "rb") as f:
+#         mp3_data = f.read()
 
-    # Running the async function in synchronous context for testing
-    asyncio.run(handle_audio_from_user(mp3_data))
+#     # Running the async function in synchronous context for testing
+#     asyncio.run(handle_audio_from_user(mp3_data))

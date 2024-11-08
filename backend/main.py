@@ -1,9 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from assistant.assistant_controller import controller as AssistantAudioController
-from project_config import setup_app_config
-
-setup_app_config()
 
 app = FastAPI()
 
