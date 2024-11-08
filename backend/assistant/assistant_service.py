@@ -1,9 +1,9 @@
 import asyncio
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
-from helper import convert_file_to_readable_mp3
-from helper import convert_audio_to_text
-from helper import handle_get_response_for_user
-from helper import convert_text_to_audio
+from audio_helper import convert_file_to_readable_mp3
+from audio_helper import convert_audio_to_text
+from audio_helper import handle_get_response_for_user
+from audio_helper import convert_text_to_audio
 
 
 def __get_transcoded_audio_file_path(data: bytes) -> str:
