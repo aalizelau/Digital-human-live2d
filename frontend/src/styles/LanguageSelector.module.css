@@ -1,0 +1,30 @@
+/* LanguageSelector.module.css */
+
+.container {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  
+  .label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+  
+  .select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .select:focus {
+    border-color: #0070f3;
+  }
+  
+  .select option {
+    padding: 0.5rem;
+  }

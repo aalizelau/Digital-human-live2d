@@ -43,8 +43,7 @@ async def handle_audio_from_user(file: bytes) -> str:
 
 # testing
 # if __name__ == "__main__":
-#     pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"]
-#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/test_user_input.mp3", "rb") as f:
+#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/CN_test_input.m4a", "rb") as f:
 #         mp3_data = f.read()
 
 #     # Running the async function in synchronous context for testing

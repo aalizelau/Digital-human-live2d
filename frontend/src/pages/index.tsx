@@ -1,8 +1,25 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import { useState } from 'react'
 import VoiceAssistant from './components/VoiceAssistant/VoiceAssistant.component'
+import LanguageSelector from './components/LanguageSelector/LanguageSelector.component'
 
 export default function Home() {
+  // const [selectedLanguage, setSelectedLanguage] = useState('en')
+
+  // const handleLanguageChange = async (language) => {
+  //   setSelectedLanguage(language);
+
+  //   // Send the selected language to the backend
+  //   await fetch('/api/setLanguage', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ language }),
+  //   });
+  // };
+
   return (
     <>
       <Head>
@@ -12,6 +29,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+      <div className={styles.languageSelector}>
+          <LanguageSelector/>
+        </div>
           <VoiceAssistant/>
       </main>
     </>
