@@ -13,5 +13,8 @@ def convert_audio_to_text(local_input_file_path):
     print(transcription.text)
     return transcription.text
 
+
+
 # transcription_result = convert_audio_to_text("/Users/funlau/Documents/ChatCampus/backend/testing.m4a")
 # transcription_result = convert_audio_to_text("/Users/funlau/Documents/ChatCampus/backend/cantonese_testng.m4a")
+# transcription_result = convert_audio_to_text("/Users/funlau/Documents/ChatCampus/backend/audio/CN_test_input.m4a")
