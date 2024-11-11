@@ -1,6 +1,3 @@
-import requests  
-import json  
-import os
 from gtts import gTTS
 
 def convert_text_to_audio(text, filename="response.mp3"):
