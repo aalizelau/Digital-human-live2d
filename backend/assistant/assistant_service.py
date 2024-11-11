@@ -2,9 +2,15 @@ import asyncio
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from audio_helper import convert_file_to_readable_mp3
 from audio_helper import convert_audio_to_text
-from audio_helper import handle_get_response_for_user
 from audio_helper import convert_text_to_audio
 
+from rag_helper import get_response_from_llm
+from rag_helper import get_pdf_preview
+from rag_helper import get_text_chunks
+from rag_helper import get_context
+
+#KB source
+pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"]
 
 def __get_transcoded_audio_file_path(data: bytes) -> str:
     local_file_path = persist_binary_file_locally(data, file_suffix='user_audio.mp3')
@@ -13,7 +19,6 @@ def __get_transcoded_audio_file_path(data: bytes) -> str:
         local_input_file_path=local_file_path,
         local_output_file_path=local_output_file_path
     )
-
     return local_output_file_path
 
 
@@ -25,15 +30,21 @@ async def handle_audio_from_user(file: bytes) -> str:
     """
     print("handle audio from user")
     transcoded_user_audio_file_path = __get_transcoded_audio_file_path(file)
-    text_content = convert_audio_to_text(transcoded_user_audio_file_path)
-    ai_text_reply = handle_get_response_for_user(text_content)
-    print("ai_text_reply: ", ai_text_reply)
-    output_audio_local_file_path = convert_text_to_audio(ai_text_reply)
+    user_query = convert_audio_to_text(transcoded_user_audio_file_path)
+    extracted_text = get_pdf_preview(pdf_docs=pdf_path)
+    chunks = get_text_chunks(extracted_text)
+    retrieved_text = get_context(chunks)
+    print("retrieved_text: ", retrieved_text)
+    llm_response = get_response_from_llm(retrieved_text,user_query)
+    print("ai_text_reply: ", llm_response)
+    output_audio_local_file_path = convert_text_to_audio(llm_response)
 
     return output_audio_local_file_path
 
+# testing
 # if __name__ == "__main__":
-#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/test_for_all.mp3", "rb") as f:
+#     pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"]
+#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/test_user_input.mp3", "rb") as f:
 #         mp3_data = f.read()
 
 #     # Running the async function in synchronous context for testing
