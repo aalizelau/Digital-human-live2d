@@ -1,19 +1,15 @@
-import { useState } from 'react';
+import React from 'react';
 import styles from '@/styles/LanguageSelector.module.css';
 
-export default function LanguageSelector({ onLanguageChange }) {
-  const [language, setLanguage] = useState('en');
-
-  const handleLanguageChange = (event) => {
-    const selectedLanguage = event.target.value;
-    setLanguage(selectedLanguage);
-    onLanguageChange(selectedLanguage);
-  };
-
+export default function LanguageSelector({ selectedLanguage, onLanguageChange }) {
   return (
-    <div className={styles.container}>
-      <label htmlFor="language">Choose Language:</label>
-      <select id="language" value={language} onChange={handleLanguageChange}>
+    <div className={styles.languageSelector}>
+      <label htmlFor="language-select">Choose Language:</label>
+      <select 
+        id="language" 
+        value={selectedLanguage} 
+        onChange={(e) => onLanguageChange(e.target.value)}
+      >
         <option value="EN">English</option>
         <option value="zh-CN">Mandarin</option>
         <option value="Yue">Cantonese</option>
