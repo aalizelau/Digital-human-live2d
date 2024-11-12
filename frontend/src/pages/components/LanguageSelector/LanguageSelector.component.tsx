@@ -1,7 +1,16 @@
 import React from 'react';
 import styles from '@/styles/LanguageSelector.module.css';
 
-export default function LanguageSelector({ selectedLanguage, onLanguageChange }) {
+// Define props interface
+interface LanguageSelectorProps {
+  selectedLanguage: string;
+  onLanguageChange: (language: string) => void;
+}
+
+export default function LanguageSelector({ 
+    selectedLanguage,
+    onLanguageChange
+  }: LanguageSelectorProps) {
   return (
     <div className={styles.languageSelector}>
       <label htmlFor="language-select">Choose Language:</label>
