@@ -4,11 +4,24 @@ import styles from "@/styles/VoiceAssistant.module.css";
 import useVoiceAssistant from "./useVoiceAssistant.hook";
 import ReactLoading from "react-loading";
 import AudioPlayer from "../AudioPlayer/AudioPlayer.component";
+import LanguageSelector from '../LanguageSelector/LanguageSelector.component';
 
 const VoiceAssistant = ()=>{
-    const {handleUserVoiceRecorded,isWaitingAIOutput,lastAIReplyURL,handleOnAudioPlayEnd} = useVoiceAssistant()
+    const {
+        handleUserVoiceRecorded,
+        isWaitingAIOutput,
+        lastAIReplyURL,
+        handleOnAudioPlayEnd,
+        selectedLanguage,
+        handleLanguageChange,
+    } = useVoiceAssistant()
+
     return (
         <div className={styles["voice-assistant-component"]}>
+            <LanguageSelector
+                selectedLanguage={selectedLanguage}
+                onLanguageChange={handleLanguageChange}
+            />
             <VoiceAssistantAvatar/>
             <VoiceRecorder onAudioRecordingComplete={handleUserVoiceRecorded}/>
             {isWaitingAIOutput &&  
