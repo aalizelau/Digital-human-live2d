@@ -22,7 +22,7 @@ def __get_transcoded_audio_file_path(data: bytes) -> str:
     return local_output_file_path
 
 
-async def handle_audio_from_user(file: bytes) -> str:
+async def handle_audio_from_user(file: bytes, language) -> str:
     """
         Entrypoint
     :param file:
@@ -37,7 +37,7 @@ async def handle_audio_from_user(file: bytes) -> str:
     print("retrieved_text: ", retrieved_text)
     llm_response = get_response_from_llm(retrieved_text,user_query)
     print("ai_text_reply: ", llm_response)
-    output_audio_local_file_path = convert_text_to_audio(llm_response)
+    output_audio_local_file_path = convert_text_to_audio(llm_response, language)
 
     return output_audio_local_file_path
 

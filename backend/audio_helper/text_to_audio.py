@@ -1,9 +1,9 @@
 import os 
 from gtts import gTTS
 
-def convert_text_to_audio(text, filename="response.mp3"):
+def convert_text_to_audio(text, language, filename="response.mp3"):
     print("Converting response to speech...")
-    tts = gTTS(text=text, lang='zh-CN')
+    tts = gTTS(text=text, lang=language)
     # tts = gTTS(text=text, lang='en')
     tts.save(filename)
     print(f"Audio saved as {filename}")
