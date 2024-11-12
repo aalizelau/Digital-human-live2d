@@ -5,6 +5,7 @@ import {useState} from "react"
 const useVoiceAssistant = ()=>{
     const [isWaitingAIOutput,setIsWaitingAIOutput] = useState<boolean>(false)
     const [lastAIReplyURL,setLastAIReplyURL] = useState<string|undefined>(undefined)
+    const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
 
     const handleUserVoiceRecorded = async(userAudioData:Blob)=>{
         setIsWaitingAIOutput(true)
@@ -20,11 +21,19 @@ const useVoiceAssistant = ()=>{
     const handleOnAudioPlayEnd = ()=>{
         setLastAIReplyURL(undefined)
     }
+
+    const handleLanguageChange = (language:string) => {
+        setSelectedLanguage(language);
+    };
+
+
     return{
         handleUserVoiceRecorded,
         isWaitingAIOutput,
         lastAIReplyURL,
-        handleOnAudioPlayEnd
+        handleOnAudioPlayEnd,
+        selectedLanguage,
+        handleLanguageChange,
     }
 }
 
