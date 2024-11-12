@@ -9,7 +9,7 @@ const useVoiceAssistant = ()=>{
 
     const handleUserVoiceRecorded = async(userAudioData:Blob)=>{
         setIsWaitingAIOutput(true)
-        const result = await getAIReplyOutput(userAudioData)
+        const result = await getAIReplyOutput(userAudioData, selectedLanguage)
         setIsWaitingAIOutput(false)
         if(result){
             const url = URL.createObjectURL(result)
