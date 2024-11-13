@@ -15,10 +15,16 @@ export const getAIReplyOutput = async (userAudioData: Blob, selectedLanguage: st
         "http://localhost:8000/voice-assistant/audio-message",
         requestOptions
       );
-  
-      return await result.blob();
+      // Parse the JSON response
+      const data = await result.json();
+      const transcriptionText = data.transcription_text;
+      const base64AudioData = data.audio_data;
+      return {
+        transcriptionText,
+        base64AudioData,
+      };
+
     } catch (error) {
       console.error("Error handling user voice data >> ", error);
     }
   };
-  
