@@ -18,9 +18,11 @@ export const getAIReplyOutput = async (userAudioData: Blob, selectedLanguage: st
       // Parse the JSON response
       const data = await result.json();
       const transcriptionText = data.transcription_text;
+      const userQuery = data.user_query;
       const base64AudioData = data.audio_data;
       return {
         transcriptionText,
+        userQuery,
         base64AudioData,
       };
 

@@ -39,7 +39,7 @@ async def handle_audio_from_user(file: bytes, language) -> str:
     print("ai_text_reply: ", llm_response)
     output_audio_local_file_path = convert_text_to_audio(llm_response, language)
 
-    return output_audio_local_file_path, llm_response
+    return output_audio_local_file_path, llm_response, user_query
 
 # testing
 # if __name__ == "__main__":

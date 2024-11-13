@@ -5,7 +5,7 @@ import styles from "@/styles/ChatDisplay.module.css"; // Add custom styling if n
 interface ChatDataProps {
     chatData: {
       userQuery: string;
-      aiResponse: string;
+      aiResponseText: string;
     };
   }
 
@@ -18,7 +18,7 @@ interface ChatDataProps {
       </div>
       <div className={styles["chat-message"]}>
         <strong>AI:</strong>
-        <p>{chatData.aiResponse}</p>
+        <p>{chatData.aiResponseText}</p>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const useVoiceAssistant = ()=>{
     const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
     const [chatData, setChatData] = useState({
         userQuery: "",
-        aiResponse: ""
+        aiResponseText: ""
     });
 
     const handleUserVoiceRecorded = async(userAudioData:Blob)=>{
@@ -16,7 +16,9 @@ const useVoiceAssistant = ()=>{
         const result = await getAIReplyOutput(userAudioData, selectedLanguage)
         setIsWaitingAIOutput(false)
         if(result){
-            const { transcriptionText, base64AudioData } = result;
+            const { transcriptionText, userQuery, base64AudioData } = result;
+            handleChatDataChange('aiResponseText', transcriptionText);
+            handleChatDataChange('userQuery', userQuery);
             const audioData = 'data:audio/mpeg;base64,' + base64AudioData;
             setLastAIReplyURL(audioData)
         }
