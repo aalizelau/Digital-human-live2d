@@ -1,26 +1,25 @@
 import { getAIReplyOutput } from "@/pages/services/aivoiceassistant.service"
 import {useState} from "react"
 
-
 const useVoiceAssistant = ()=>{
     const [isWaitingAIOutput,setIsWaitingAIOutput] = useState<boolean>(false)
     const [lastAIReplyURL,setLastAIReplyURL] = useState<string|undefined>(undefined)
     const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
-    const [chatData, setChatData] = useState({
-        userQuery: "",
-        aiResponseText: ""
-    });
+    const [chatData, setChatData] = useState<Array<{ userQuery: string; aiResponseText: string }>>([]);
 
-    const handleUserVoiceRecorded = async(userAudioData:Blob)=>{
-        setIsWaitingAIOutput(true)
-        const result = await getAIReplyOutput(userAudioData, selectedLanguage)
-        setIsWaitingAIOutput(false)
-        if(result){
-            const { transcriptionText, userQuery, base64AudioData } = result;
-            handleChatDataChange('aiResponseText', transcriptionText);
-            handleChatDataChange('userQuery', userQuery);
-            const audioData = 'data:audio/mpeg;base64,' + base64AudioData;
-            setLastAIReplyURL(audioData)
+    const handleUserVoiceRecorded = async (userAudioData: Blob) => {
+        setIsWaitingAIOutput(true);
+        const result = await getAIReplyOutput(userAudioData, selectedLanguage);
+        setIsWaitingAIOutput(false);
+        if (result) {
+          const { transcriptionText, userQuery, base64AudioData } = result;
+          const newMessage = {
+            userQuery,
+            aiResponseText: transcriptionText,
+          };
+          setChatData((prevData) => [...prevData, newMessage]);
+          const audioData = 'data:audio/mpeg;base64,' + base64AudioData;
+          setLastAIReplyURL(audioData);
         }
     }
 
@@ -32,14 +31,6 @@ const useVoiceAssistant = ()=>{
         setSelectedLanguage(language);
     };
 
-    const handleChatDataChange = (key:string, value:string) => {
-        setChatData((prevData) => ({
-            ...prevData,
-            [key]: value
-        }));
-    };
-
-
     return{
         handleUserVoiceRecorded,
         isWaitingAIOutput,
@@ -48,9 +39,8 @@ const useVoiceAssistant = ()=>{
         selectedLanguage,
         handleLanguageChange,
         chatData,
-        handleChatDataChange,
     }
 }
 
 
-export default useVoiceAssistant
+export default useVoiceAssistant;
