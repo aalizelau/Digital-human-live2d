@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, Form
 from fastapi.responses import FileResponse
 from assistant.assistant_service import handle_audio_from_user
+import base64
 
 controller = APIRouter(prefix='/voice-assistant')
 
@@ -13,5 +14,11 @@ async def handle_receive_audio_data(
         print('file_data >> ', file)
         print('Selected language:', language)
         file_data = await file.read()
-        generated_ai_audio_file_path = await handle_audio_from_user(file_data, language)
-        return FileResponse(generated_ai_audio_file_path, media_type='audio/mpeg', filename='ai_output')
+
+        generated_ai_audio_file_path, llm_response_text = await handle_audio_from_user(file_data, language)
+        with open(generated_ai_audio_file_path, "rb") as audio_file:
+            encoded_audio = base64.b64encode(audio_file.read()).decode('utf-8')
+        return {
+            "transcription_text": llm_response_text,
+            "audio_data": encoded_audio
+        }
