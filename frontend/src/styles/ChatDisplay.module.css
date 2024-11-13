@@ -1,0 +1,53 @@
+/* ChatDisplay.module.css */
+
+.chat-display {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 600px;
+    margin: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .chat-message {
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+    border-radius: 12px;
+    max-width: 80%;
+  }
+  
+  .chat-message strong {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+  
+  .user-message {
+    align-self: flex-end;
+    background-color: #d0ebff;
+    color: #004085;
+  }
+  
+  .ai-message {
+    align-self: flex-start;
+    background-color: #ffe8d6;
+    color: #6b3e26;
+  }
+  
+  /* Scrollbar customization */
+  .chat-display::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .chat-display::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .chat-display::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 4px;
+  }

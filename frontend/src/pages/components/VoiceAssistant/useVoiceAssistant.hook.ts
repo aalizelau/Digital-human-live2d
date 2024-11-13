@@ -6,7 +6,10 @@ const useVoiceAssistant = ()=>{
     const [isWaitingAIOutput,setIsWaitingAIOutput] = useState<boolean>(false)
     const [lastAIReplyURL,setLastAIReplyURL] = useState<string|undefined>(undefined)
     const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
-    const [transcriptionText, setTranscriptionText] = useState('');
+    const [chatData, setChatData] = useState({
+        userQuery: "",
+        aiResponse: ""
+    });
 
     const handleUserVoiceRecorded = async(userAudioData:Blob)=>{
         setIsWaitingAIOutput(true)
@@ -14,7 +17,6 @@ const useVoiceAssistant = ()=>{
         setIsWaitingAIOutput(false)
         if(result){
             const { transcriptionText, base64AudioData } = result;
-            setTranscriptionText(transcriptionText);
             const audioData = 'data:audio/mpeg;base64,' + base64AudioData;
             setLastAIReplyURL(audioData)
         }
@@ -28,6 +30,13 @@ const useVoiceAssistant = ()=>{
         setSelectedLanguage(language);
     };
 
+    const handleChatDataChange = (key:string, value:string) => {
+        setChatData((prevData) => ({
+            ...prevData,
+            [key]: value
+        }));
+    };
+
 
     return{
         handleUserVoiceRecorded,
@@ -36,6 +45,8 @@ const useVoiceAssistant = ()=>{
         handleOnAudioPlayEnd,
         selectedLanguage,
         handleLanguageChange,
+        chatData,
+        handleChatDataChange,
     }
 }
 

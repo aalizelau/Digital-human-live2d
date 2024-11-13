@@ -5,6 +5,7 @@ import useVoiceAssistant from "./useVoiceAssistant.hook";
 import ReactLoading from "react-loading";
 import AudioPlayer from "../AudioPlayer/AudioPlayer.component";
 import LanguageSelector from '../LanguageSelector/LanguageSelector.component';
+import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
 
 const VoiceAssistant = ()=>{
     const {
@@ -14,6 +15,8 @@ const VoiceAssistant = ()=>{
         handleOnAudioPlayEnd,
         selectedLanguage,
         handleLanguageChange,
+        chatData,
+        handleChatDataChange,
     } = useVoiceAssistant()
 
     return (
@@ -27,6 +30,7 @@ const VoiceAssistant = ()=>{
             {isWaitingAIOutput &&  
                 (<ReactLoading type={"bars"} color={"#4287f5"} width={200} />)
             }
+            <ChatDisplay chatData={chatData} />
 
             <AudioPlayer audioFileUrl={lastAIReplyURL} onAudioPlayEnd={handleOnAudioPlayEnd}/>
         </div>
