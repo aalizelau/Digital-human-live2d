@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import VoiceAssistantProvider from './context/VoiceAssistantProvider';
-import DigitalHumanContainer from './components/DigitalHumanContainer/DigitalHuman.component';
+import DigitalHumanContainer from './components/DigitalHumanContainer/DigitalHumanContainer.component';
+import ConversationContainer from "./components/ConversationContainer/ConversationContainer.component"
+import HeaderContainer from './components/HeaderContainer/HeaderContainer.component'
 
 export default function Home() {
   return (
@@ -13,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VoiceAssistantProvider>
-        <Header />
+        <HeaderContainer/>
         <main className={styles.main}>
           <DigitalHumanContainer/>
           <ConversationContainer />
