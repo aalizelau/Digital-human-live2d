@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "@/styles/ChatDisplay.module.css"; // Add custom styling if needed
 
-// Define props interface
 // Define the ChatMessage interface
 interface ChatMessage {
     userQuery: string;

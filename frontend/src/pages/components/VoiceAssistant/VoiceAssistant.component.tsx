@@ -16,7 +16,6 @@ const VoiceAssistant = ()=>{
         selectedLanguage,
         handleLanguageChange,
         chatData,
-        handleChatDataChange,
     } = useVoiceAssistant()
 
     return (
