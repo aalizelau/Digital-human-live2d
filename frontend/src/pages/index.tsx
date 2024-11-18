@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
+import '@/styles/globals.css';
 import VoiceAssistantProvider from './context/VoiceAssistantProvider';
 import DigitalHumanContainer from './components/DigitalHumanContainer/DigitalHumanContainer.component';
 import ConversationContainer from "./components/ConversationContainer/ConversationContainer.component"
@@ -16,7 +16,7 @@ export default function Home() {
       </Head>
       <VoiceAssistantProvider>
         <HeaderContainer/>
-        <main className={styles.main}>
+        <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
           <DigitalHumanContainer/>
           <ConversationContainer />
         </main>

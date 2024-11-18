@@ -1,4 +1,5 @@
-import useVoiceAssistant from '../hooks/useVoiceAssistant.hook';
+import useVoiceAssistant from '../hooks/useVoiceAssistant.hook'
+import VoiceAssistantContext from './VoiceAssistantContext'
 
 const VoiceAssistantProvider = ({ children }) => {
   const voiceAssistantState = useVoiceAssistant();
