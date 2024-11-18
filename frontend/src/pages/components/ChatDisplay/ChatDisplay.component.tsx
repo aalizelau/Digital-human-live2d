@@ -1,34 +1,51 @@
-import React from "react";
-import styles from "@/styles/ChatDisplay.module.css"; // Add custom styling if needed
+import React, { useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ScrollArea } from "@/components/ui/scroll-area" // Adjust import paths as necessary
 
-// Define the ChatMessage interface
-interface ChatMessage {
-    userQuery: string;
-    aiResponseText: string;
-  }
-  
-  // Define props interface
-  interface ChatDataProps {
-    chatData: ChatMessage[];
-  }
+// Define the ChatMessage type
+type ChatMessage = {
+  id: string;
+  text: string;
+  isUser: boolean;
+};
+
+// Define props interface
+interface ChatDataProps {
+  chatData: ChatMessage[];
+}
 
 const ChatDisplay: React.FC<ChatDataProps> = ({ chatData }) => {
-    return (
-        <div className={styles["chat-display"]}>
-        {chatData.map((message, index) => (
-            <div key={index} className={styles["chat-message"]}>
-            <div className={styles["user-message"]}>
-                <strong>User:</strong>
-                <p>{message.userQuery}</p>
-            </div>
-            <div className={styles["ai-message"]}>
-                <strong>AI:</strong>
-                <p>{message.aiResponseText}</p>
-            </div>
-            </div>
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    }
+  }, [chatData]);
+
+  return (
+    <ScrollArea className="flex-grow mb-4 pr-4" ref={scrollAreaRef}>
+      <AnimatePresence initial={false}>
+        {chatData.map((message) => (
+          <motion.div
+            key={message.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className={`mb-3 p-3 rounded-lg ${
+              message.isUser
+                ? 'bg-blue-900 bg-opacity-50 text-blue-100 ml-4'
+                : 'bg-purple-900 bg-opacity-50 text-purple-100 mr-4'
+            }`}
+          >
+            <strong>{message.isUser ? 'You: ' : 'NeoLearn AI: '}</strong>
+            <p>{message.text}</p>
+          </motion.div>
         ))}
-        </div>
-    );
+      </AnimatePresence>
+    </ScrollArea>
+  );
 };
 
 export default ChatDisplay;
