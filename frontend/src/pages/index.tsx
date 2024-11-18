@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import '@/styles/globals.css';
 import VoiceAssistantProvider from './context/VoiceAssistantProvider';
 import DigitalHumanContainer from './components/DigitalHumanContainer/DigitalHumanContainer.component';
 import ConversationContainer from "./components/ConversationContainer/ConversationContainer.component"
@@ -15,11 +14,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VoiceAssistantProvider>
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <HeaderContainer/>
-        <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <main className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
           <DigitalHumanContainer/>
           <ConversationContainer />
         </main>
+      </div>
         </VoiceAssistantProvider>
     </>
   );
