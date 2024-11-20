@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/components/ConversationContainer/ConversationContainer.component.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/components/ConversationContainer/ConversationContainer.component.tsx"],
   "exclude": ["node_modules"]
 }

@@ -1,23 +1,33 @@
-import React, { useState, useContext } from 'react';
-import VoiceAssistantContext from '../../context/VoiceAssistantContext';
+import React, { useState } from 'react';
 import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
 import { MessageCircle, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const ConversationContainer = () => {
-  const { chatData, addMessage } = useContext(VoiceAssistantContext);
+interface Message {
+  text: string;
+  isUser: boolean;
+}
+
+export default function ConversationContainer() {
+  const [conversation, setConversation] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!inputText.trim()) return;
+  const handleUserInput = (input: string) => {
+    setConversation((prev) => [...prev, { text: input, isUser: true }]);
+    // Simulate digital human response (dummy response)
+    setTimeout(() => {
+      const response = `Dummy response processed for "${input}".`;
+      setConversation((prev) => [...prev, { text: response, isUser: false }]);
+    }, 1000);
+  };
 
-    // Add the user's message to the context
-    addMessage({ text: inputText, isUser: true });
-
-    // Clear the input field
-    setInputText('');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputText.trim()) {
+      handleUserInput(inputText);
+      setInputText('');
+    }
   };
 
   return (
@@ -26,7 +36,7 @@ const ConversationContainer = () => {
         <MessageCircle className="w-8 h-8 mr-2 text-blue-400" />
         Quantum Dialog
       </h2>
-      <ChatDisplay chatData={chatData} />
+      <ChatDisplay chatData={conversation} />
       <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
         <Input
           type="text"
@@ -46,6 +56,4 @@ const ConversationContainer = () => {
       </form>
     </div>
   );
-};
-
-export default ConversationContainer;
+}

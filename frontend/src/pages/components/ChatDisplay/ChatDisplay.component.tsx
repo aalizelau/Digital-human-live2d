@@ -1,34 +1,31 @@
 import React, { useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollArea } from "@/components/ui/scroll-area" // Adjust import paths as necessary
 
-// Define the ChatMessage type
-type ChatMessage = {
-  id: string;
+
+  // const chatData  = [
+  //   { text: "Hello!", isUser: true },         
+  //   { text: "Hi there! How can I assist?", isUser: false }, 
+  //   { text: "What's the weather today?", isUser: true }, 
+  //   { text: "It's sunny and 75°F.", isUser: false },   
+  // ];
+interface ChatMessage {
   text: string;
   isUser: boolean;
-};
-
-// Define props interface
-interface ChatDataProps {
+}
+interface ChatDisplayProps {
   chatData: ChatMessage[];
 }
 
-const ChatDisplay: React.FC<ChatDataProps> = ({ chatData }) => {
+const ChatDisplay: React.FC<ChatDisplayProps> = ({ chatData }) => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
-    }
-  }, [chatData]);
-
   return (
     <ScrollArea className="flex-grow mb-4 pr-4" ref={scrollAreaRef}>
       <AnimatePresence initial={false}>
-        {chatData.map((message) => (
+        {chatData.map((message,index) => (
           <motion.div
-            key={message.id}
+            key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
