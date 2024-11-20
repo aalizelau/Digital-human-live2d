@@ -12,7 +12,7 @@ export default function ConversationContainer() {
     const {
       inputText,
       chatData,
-      handleSubmit,
+      handleTextSubmit,
       setInputText
     } = useContext(VoiceAssistantContext);
 
@@ -24,7 +24,7 @@ export default function ConversationContainer() {
         Quantum Dialog
       </h2>
       <ChatDisplay chatData={chatData} />
-      <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
+      <form onSubmit={handleTextSubmit} className="flex gap-2 mt-4">
         <Input
           type="text"
           placeholder="Type your message..."

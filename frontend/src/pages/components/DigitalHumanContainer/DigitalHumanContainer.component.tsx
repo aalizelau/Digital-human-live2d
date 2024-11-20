@@ -19,8 +19,6 @@ const DigitalHumanContainer = () => {
     <div className="md:col-span-2 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6">
       <motion.div
         className="w-48 h-48 md:w-80 md:h-80 rounded-full mb-6 relative overflow-hidden"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-50 animate-pulse"></div>
         <VoiceAssistantAvatar />

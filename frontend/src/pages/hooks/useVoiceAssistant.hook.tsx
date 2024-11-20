@@ -22,7 +22,7 @@ const useVoiceAssistant = ()=>{
     }, 1000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleTextSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputText.trim()) {
       handleUserInput(inputText);
@@ -60,7 +60,7 @@ const useVoiceAssistant = ()=>{
         chatData,
         inputText,
         setInputText,
-        handleSubmit,
+        handleSubmit: handleTextSubmit,
     }
 }
 

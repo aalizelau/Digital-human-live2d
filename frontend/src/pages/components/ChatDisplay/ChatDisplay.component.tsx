@@ -1,15 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollArea } from "@/components/ui/scroll-area" // Adjust import paths as necessary
 
 
-  // const chatData  = [
-  //   { text: "Hello!", isUser: true },         
-  //   { text: "Hi there! How can I assist?", isUser: false }, 
-  //   { text: "What's the weather today?", isUser: true }, 
-  //   { text: "It's sunny and 75°F.", isUser: false },   
-  // ];
 interface ChatMessage {
   text: string;
   isUser: boolean;
