@@ -4,31 +4,18 @@ import { MessageCircle, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface Message {
-  text: string;
-  isUser: boolean;
-}
+import { useContext } from 'react';
+import VoiceAssistantContext from '../../context/VoiceAssistantContext';
+
 
 export default function ConversationContainer() {
-  const [conversation, setConversation] = useState<Message[]>([]);
-  const [inputText, setInputText] = useState('');
+    const {
+      inputText,
+      chatData,
+      handleSubmit,
+      setInputText
+    } = useContext(VoiceAssistantContext);
 
-  const handleUserInput = (input: string) => {
-    setConversation((prev) => [...prev, { text: input, isUser: true }]);
-    // Simulate digital human response (dummy response)
-    setTimeout(() => {
-      const response = `Dummy response processed for "${input}".`;
-      setConversation((prev) => [...prev, { text: response, isUser: false }]);
-    }, 1000);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputText.trim()) {
-      handleUserInput(inputText);
-      setInputText('');
-    }
-  };
 
   return (
     <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 flex flex-col h-[calc(100vh-10rem)]">
@@ -36,7 +23,7 @@ export default function ConversationContainer() {
         <MessageCircle className="w-8 h-8 mr-2 text-blue-400" />
         Quantum Dialog
       </h2>
-      <ChatDisplay chatData={conversation} />
+      <ChatDisplay chatData={chatData} />
       <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
         <Input
           type="text"
