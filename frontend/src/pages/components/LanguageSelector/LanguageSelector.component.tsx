@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '@/styles/LanguageSelector.module.css';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Globe } from 'lucide-react';
 
 // Define props interface
 interface LanguageSelectorProps {
@@ -7,31 +8,32 @@ interface LanguageSelectorProps {
   onLanguageChange: (language: string) => void;
 }
 
+const languages = [
+  { code: 'en', name: 'English' },
+  { code: 'zh-CN', name: 'Mandarin' },
+  { code: 'Yue', name: 'Cantonese' },
+]
+
 export default function LanguageSelector({ 
     selectedLanguage,
     onLanguageChange
   }: LanguageSelectorProps) {
     return (
-      <div className="relative">
-        <label htmlFor="language-select" className="sr-only">
-          Choose Language
-        </label>
-        <select
-          id="language-select"
-          value={selectedLanguage}
-          onChange={(e) => onLanguageChange(e.target.value)}
-          className="w-40 bg-black bg-opacity-50 text-white border border-purple-500 rounded-md px-4 py-2 hover:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-purple-400"
+        <Select
+            value={selectedLanguage}
+            onValueChange={(value) => onLanguageChange(value)}
         >
-          <option value="en" className="bg-black text-white">
-            English
-          </option>
-          <option value="zh-CN" className="bg-black text-white">
-            Mandarin
-          </option>
-          <option value="Yue" className="bg-black text-white">
-            Cantonese
-          </option>
-        </select>
-      </div>
+        <SelectTrigger className="w-[180px] bg-black bg-opacity-50 border border-purple-500 text-white">
+          <Globe className="w-4 h-4 mr-2 text-purple-400" />
+          <SelectValue placeholder="Select Language" />
+        </SelectTrigger>
+        <SelectContent className="bg-black text-white border border-purple-500">
+          {languages.map((lang) => (
+            <SelectItem key={lang.code} value={lang.code} className="hover:bg-purple-900">
+              {lang.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+        </Select>
     );
   }
