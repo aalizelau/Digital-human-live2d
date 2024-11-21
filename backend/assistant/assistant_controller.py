@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, Body
 from fastapi.responses import FileResponse
 from assistant.assistant_service import handle_audio_from_user, handle_text_from_user
 import base64
@@ -25,6 +25,6 @@ async def handle_receive_audio_data(
         }
 
 @controller.post('/text-message', status_code=200)
-async def handle_receive_text_data(text_data):
-      ai_response = handle_text_from_user(text_data)
+async def handle_receive_text_data(text_data: str = Body(...)):
+      ai_response = await handle_text_from_user(text_data)
       return {"response": ai_response}

@@ -51,10 +51,16 @@ async def handle_text_from_user(user_input: str) -> str:
     print("ai_text_reply: ", llm_response)
     return llm_response
 
-# testing
+# testing audio 
 # if __name__ == "__main__":
 #     with open("/Users/funlau/Documents/ChatCampus/backend/audio/CN_test_input.m4a", "rb") as f:
 #         mp3_data = f.read()
 
 #     # Running the async function in synchronous context for testing
 #     asyncio.run(handle_audio_from_user(mp3_data))
+
+# testing text input 
+# if __name__ == "__main__":
+#     text_input = "what is fake news?"
+#     asyncio.run(handle_text_from_user(text_input))
+
