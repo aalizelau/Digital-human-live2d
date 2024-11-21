@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
 import { MessageCircle, Send } from 'lucide-react';

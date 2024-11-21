@@ -1,3 +1,5 @@
+"use client";
+
 const BASE_URL = "https://chatcampus-production.up.railway.app"
 
 export const getAIReplyFromAudio = async (userAudioData: Blob, selectedLanguage: string) => {

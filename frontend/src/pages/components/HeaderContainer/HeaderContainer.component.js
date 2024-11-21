@@ -1,3 +1,5 @@
+"use client";
+
 import LanguageSelector from '../LanguageSelector/LanguageSelector.component';
 import { useContext } from 'react';
 import VoiceAssistantContext from '../../context/VoiceAssistantContext';
