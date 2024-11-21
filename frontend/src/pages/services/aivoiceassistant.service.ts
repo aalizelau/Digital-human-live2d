@@ -1,3 +1,5 @@
+const BASE_URL = "https://chatcampus-production.up.railway.app"
+
 export const getAIReplyFromAudio = async (userAudioData: Blob, selectedLanguage: string) => {
     const audioFile = new File([userAudioData], "userVoiceInput", {
       type: "audio/mpeg",
@@ -11,10 +13,7 @@ export const getAIReplyFromAudio = async (userAudioData: Blob, selectedLanguage:
       body: formData,
     };
     try {
-      const result = await fetch(
-        "http://localhost:8000/voice-assistant/audio-message",
-        requestOptions
-      );
+      const result = await fetch(`${BASE_URL}/voice-assistant/audio-message`, requestOptions);
       // Parse the JSON response
       const data = await result.json();
       const transcriptionText = data.transcription_text;
@@ -41,10 +40,7 @@ export const getAIReplyFromText = async (textInput: string) => {
   };
 
   try {
-    const result = await fetch(
-      "http://localhost:8000/voice-assistant/text-message",
-      requestOptions
-    );
+    const result = await fetch(`${BASE_URL}/voice-assistant/text-message`, requestOptions);
     const data = await result.json();
     return {
       aiResponseText: data.response,
