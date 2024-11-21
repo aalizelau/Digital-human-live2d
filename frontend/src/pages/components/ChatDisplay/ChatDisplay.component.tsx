@@ -13,6 +13,15 @@ interface ChatDisplayProps {
 
 const ChatDisplay: React.FC<ChatDisplayProps> = ({ chatData }) => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   if (scrollAreaRef.current) {
+  //     requestAnimationFrame(() => {
+  //       scrollAreaRef.current!.scrollTop = scrollAreaRef.current!.scrollHeight;
+  //     });
+  //   }
+  // }, [chatData]);
+  
   return (
     <ScrollArea className="flex-grow mb-4 pr-4" ref={scrollAreaRef}>
       <AnimatePresence initial={false}>

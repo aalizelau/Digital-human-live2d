@@ -37,7 +37,7 @@ export const getAIReplyFromText = async (textInput: string) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ text: textInput }),
+    body: JSON.stringify(textInput),
   };
 
   try {
