@@ -2,17 +2,16 @@ import tempfile
 import os
 from uuid import uuid4
 
-TMP_FOLDER_NAME = "ChatCampus"
+TMP_FOLDER_NAME = "Tmp"
 
 
 def create_if_not_exists(path: str):
-    if not os.path.exists(path):
-        os.makedirs(path)
+    os.makedirs(path, mode=0o755, exist_ok=True)
 
 
 def get_tmp_folder_path():
-    path = tempfile.gettempdir()
-    path = os.path.join(path, TMP_FOLDER_NAME)
+    base_path = os.getcwd()
+    path = os.path.join(base_path, TMP_FOLDER_NAME)
     create_if_not_exists(path)
     return path
 
@@ -34,8 +33,8 @@ def persist_binary_file_locally(data: bytes, file_suffix: str) -> str:
     return file_path
 
 
-if __name__ == "__main__":
-    print(get_tmp_folder_path())
+# if __name__ == "__main__":
+#     print(get_tmp_folder_path())
 
 # if __name__ == "__main__":
 #     # Test 1: Print the temporary folder path

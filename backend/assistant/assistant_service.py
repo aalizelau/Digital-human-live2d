@@ -28,10 +28,16 @@ pdfs_paths=[pdf_path]
 def __get_transcoded_audio_file_path(data: bytes) -> str:
     local_file_path = persist_binary_file_locally(data, file_suffix='user_audio.mp3')
     local_output_file_path = create_unique_tmp_file(file_suffix='transcoded_user_audio.mp3')
-    convert_file_to_readable_mp3(
-        local_input_file_path=local_file_path,
-        local_output_file_path=local_output_file_path
-    )
+    try:
+        convert_file_to_readable_mp3(
+            local_input_file_path=local_file_path,
+            file_path=local_output_file_path
+        )
+    finally:
+        if os.path.exists(local_file_path):
+            os.remove(local_file_path)
+    if not os.path.exists(local_output_file_path):
+        raise FileNotFoundError(f"Transcoded file not created: {local_output_file_path}")
     return local_output_file_path
 
 
@@ -43,7 +49,11 @@ async def handle_audio_from_user(file: bytes, language) -> str:
     """
     print("handle audio from user")
     transcoded_user_audio_file_path = __get_transcoded_audio_file_path(file)
-    user_query = convert_audio_to_text(transcoded_user_audio_file_path)
+    try:
+        user_query = convert_audio_to_text(transcoded_user_audio_file_path)
+    finally:
+        if os.path.exists(transcoded_user_audio_file_path):
+            os.remove(transcoded_user_audio_file_path)
     extracted_text = get_pdf_preview(pdf_docs=pdfs_paths)
     chunks = get_text_chunks(extracted_text)
     retrieved_text = get_context(chunks)
