@@ -41,6 +41,16 @@ async def handle_audio_from_user(file: bytes, language) -> str:
 
     return output_audio_local_file_path, llm_response, user_query
 
+async def handle_text_from_user(user_input: str) -> str:
+    print("handle text from user")
+    extracted_text = get_pdf_preview(pdf_docs=pdf_path)
+    chunks = get_text_chunks(extracted_text)
+    retrieved_text = get_context(chunks)
+    print("retrieved_text: ", retrieved_text)
+    llm_response = get_response_from_llm(retrieved_text,user_input)
+    print("ai_text_reply: ", llm_response)
+    return llm_response
+
 # testing
 # if __name__ == "__main__":
 #     with open("/Users/funlau/Documents/ChatCampus/backend/audio/CN_test_input.m4a", "rb") as f:

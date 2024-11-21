@@ -1,4 +1,4 @@
-import { getAIReplyOutput } from "@/pages/services/aivoiceassistant.service"
+import { getAIReplyFromAudio, getAIReplyFromText } from "@/pages/services/aivoiceassistant.service"
 import {useState} from "react"
 
 interface Message {
@@ -13,13 +13,15 @@ const useVoiceAssistant = ()=>{
     const [chatData, setChatData] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
 
-  const handleUserInput = (input: string) => {
+  const handleUserInput = async (input: string) => {
     setChatData((prev) => [...prev, { text: input, isUser: true }]);
-    // Simulate digital human response (dummy response)
-    setTimeout(() => {
-      const response = `Dummy response processed for "${input}".`;
-      setChatData((prev) => [...prev, { text: response, isUser: false }]);
-    }, 1000);
+    setIsWaitingAIOutput(true);
+        const result = await getAIReplyFromText(input);
+    setIsWaitingAIOutput(false);
+    if (result) {
+        const { aiResponseText } = result;
+        setChatData((prevData) => [...prevData, {text: aiResponseText, isUser: false}]);
+    }
   };
 
   const handleTextSubmit = (e: React.FormEvent) => {
@@ -32,7 +34,7 @@ const useVoiceAssistant = ()=>{
 
     const handleUserVoiceRecorded = async (userAudioData: Blob) => {
         setIsWaitingAIOutput(true);
-        const result = await getAIReplyOutput(userAudioData, selectedLanguage);
+        const result = await getAIReplyFromAudio(userAudioData, selectedLanguage);
         setIsWaitingAIOutput(false);
         if (result) {
           const { transcriptionText, userQuery, base64AudioData } = result;
@@ -60,7 +62,7 @@ const useVoiceAssistant = ()=>{
         chatData,
         inputText,
         setInputText,
-        handleSubmit: handleTextSubmit,
+        handleTextSubmit,
     }
 }
 

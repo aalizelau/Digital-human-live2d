@@ -5,7 +5,6 @@ import VoiceAssistantAvatar from '../VoiceAssistantAvatar/VoiceAssistantAvatar.c
 import VoiceRecorder from '../VoiceRecorder/VoiceRecorder.component';
 import AudioPlayer from '../AudioPlayer/AudioPlayer.component';
 import ReactLoading from 'react-loading';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const DigitalHumanContainer = () => {
   const {

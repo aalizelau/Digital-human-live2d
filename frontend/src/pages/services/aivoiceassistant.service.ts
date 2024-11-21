@@ -1,4 +1,4 @@
-export const getAIReplyOutput = async (userAudioData: Blob, selectedLanguage: string) => {
+export const getAIReplyFromAudio = async (userAudioData: Blob, selectedLanguage: string) => {
     const audioFile = new File([userAudioData], "userVoiceInput", {
       type: "audio/mpeg",
     });
@@ -30,3 +30,26 @@ export const getAIReplyOutput = async (userAudioData: Blob, selectedLanguage: st
       console.error("Error handling user voice data >> ", error);
     }
   };
+
+export const getAIReplyFromText = async (textInput: string) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text: textInput }),
+  };
+
+  try {
+    const result = await fetch(
+      "http://localhost:8000/voice-assistant/text-message",
+      requestOptions
+    );
+    const data = await result.json();
+    return {
+      aiResponseText: data.response,
+    };
+  } catch (error) {
+    console.error("Error handling user text data >> ", error);
+  }
+};

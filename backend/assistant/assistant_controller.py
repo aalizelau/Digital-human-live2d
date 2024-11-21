@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Form
 from fastapi.responses import FileResponse
-from assistant.assistant_service import handle_audio_from_user
+from assistant.assistant_service import handle_audio_from_user, handle_text_from_user
 import base64
 
 controller = APIRouter(prefix='/voice-assistant')
@@ -23,3 +23,8 @@ async def handle_receive_audio_data(
              "user_query": user_query,
             "audio_data": encoded_audio
         }
+
+@controller.post('/text-message', status_code=200)
+async def handle_receive_text_data(text_data):
+      ai_response = handle_text_from_user(text_data)
+      return {"response": ai_response}
