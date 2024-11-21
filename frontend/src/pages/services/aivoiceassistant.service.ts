@@ -49,3 +49,5 @@ export const getAIReplyFromText = async (textInput: string) => {
     console.error("Error handling user text data >> ", error);
   }
 };
+
+export default getAIReplyFromAudio;
