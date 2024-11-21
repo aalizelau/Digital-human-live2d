@@ -6,7 +6,12 @@ TMP_FOLDER_NAME = "Tmp"
 
 
 def create_if_not_exists(path: str):
-    os.makedirs(path, mode=0o755, exist_ok=True)
+    try:
+        os.makedirs(path, mode=0o755, exist_ok=True)
+    except PermissionError as e:
+        raise PermissionError(f"Cannot create directory {path}: {e}")
+    except Exception as e:
+        raise RuntimeError(f"Failed to create directory {path}: {e}")
 
 
 def get_tmp_folder_path():
