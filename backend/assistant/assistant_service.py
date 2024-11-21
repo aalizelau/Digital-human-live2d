@@ -31,7 +31,7 @@ def __get_transcoded_audio_file_path(data: bytes) -> str:
     try:
         convert_file_to_readable_mp3(
             local_input_file_path=local_file_path,
-            file_path=local_output_file_path
+            local_output_file_path=local_output_file_path
         )
     finally:
         if os.path.exists(local_file_path):
@@ -80,7 +80,7 @@ async def handle_text_from_user(user_input: str) -> str:
 #         mp3_data = f.read()
 
 #     # Running the async function in synchronous context for testing
-#     asyncio.run(handle_audio_from_user(mp3_data))
+#     asyncio.run(handle_audio_from_user(mp3_data,"zh-CN"))
 
 # testing text input 
 # if __name__ == "__main__":
