@@ -21,6 +21,7 @@ from rag_helper import get_context
 script_dir = os.path.dirname(__file__)
 backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
 pdf_path = os.path.join(backend_dir, 'PDF', 'KB_fake_news.pdf')
+pdfs_paths=[pdf_path]
 # print(f"PDF File Path: {pdf_path}")
 # pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"]
 
@@ -43,7 +44,7 @@ async def handle_audio_from_user(file: bytes, language) -> str:
     print("handle audio from user")
     transcoded_user_audio_file_path = __get_transcoded_audio_file_path(file)
     user_query = convert_audio_to_text(transcoded_user_audio_file_path)
-    extracted_text = get_pdf_preview(pdf_docs=pdf_path)
+    extracted_text = get_pdf_preview(pdf_docs=pdfs_paths)
     chunks = get_text_chunks(extracted_text)
     retrieved_text = get_context(chunks)
     print("retrieved_text: ", retrieved_text)
