@@ -1,3 +1,11 @@
+import sys
+import os
+
+# Add the backend directory to the Python module search path
+script_dir = os.path.dirname(__file__)
+backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
+sys.path.append(backend_dir)
+
 import asyncio
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from audio_helper import convert_file_to_readable_mp3
@@ -10,7 +18,11 @@ from rag_helper import get_text_chunks
 from rag_helper import get_context
 
 #KB source
-pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"]
+script_dir = os.path.dirname(__file__)
+backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
+pdf_path = os.path.join(backend_dir, 'PDF', 'KB_fake_news.pdf')
+# print(f"PDF File Path: {pdf_path}")
+# pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"]
 
 def __get_transcoded_audio_file_path(data: bytes) -> str:
     local_file_path = persist_binary_file_locally(data, file_suffix='user_audio.mp3')
