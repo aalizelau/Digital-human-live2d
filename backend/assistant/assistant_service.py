@@ -66,7 +66,7 @@ async def handle_audio_from_user(file: bytes, language) -> str:
 
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
-    extracted_text = get_pdf_preview(pdf_docs=pdf_path)
+    extracted_text = get_pdf_preview(pdf_docs=pdfs_paths)
     chunks = get_text_chunks(extracted_text)
     retrieved_text = get_context(chunks)
     print("retrieved_text: ", retrieved_text)
