@@ -1,3 +1,5 @@
+"use client";
+
 import useVoiceAssistant from '../hooks/useVoiceAssistant.hook'
 import VoiceAssistantContext from './VoiceAssistantContext'
 

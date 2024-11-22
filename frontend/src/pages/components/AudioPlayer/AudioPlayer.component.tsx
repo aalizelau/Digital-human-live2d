@@ -1,4 +1,4 @@
-
+"use client";
 
 export interface AudioPlayerProps{
     audioFileUrl?: string;

@@ -1,3 +1,5 @@
+"use client";
+
 import { getAIReplyFromAudio, getAIReplyFromText } from "@/pages/services/aivoiceassistant.service"
 import {useState} from "react"
 

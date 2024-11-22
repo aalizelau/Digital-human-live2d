@@ -1,3 +1,5 @@
+"use client";
+
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 export interface VoiceRecorderProps{
