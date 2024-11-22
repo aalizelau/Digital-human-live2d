@@ -41,12 +41,7 @@ def __get_transcoded_audio_file_path(data: bytes) -> str:
     return local_output_file_path
 
 
-async def handle_audio_from_user(file: bytes, language) -> str:
-    """
-        Entrypoint
-    :param file:
-    :return:
-    """
+async def handle_audio_from_user(file: bytes) -> str:
     print("handle audio from user")
     transcoded_user_audio_file_path = __get_transcoded_audio_file_path(file)
     try:
@@ -54,6 +49,9 @@ async def handle_audio_from_user(file: bytes, language) -> str:
     finally:
         if os.path.exists(transcoded_user_audio_file_path):
             os.remove(transcoded_user_audio_file_path)
+    return user_query
+
+async def generate_ai_response_audio(user_query, language) -> str:
     extracted_text = get_pdf_preview(pdf_docs=pdfs_paths)
     chunks = get_text_chunks(extracted_text)
     retrieved_text = get_context(chunks)
@@ -61,8 +59,7 @@ async def handle_audio_from_user(file: bytes, language) -> str:
     llm_response = get_response_from_llm(retrieved_text,user_query)
     print("ai_text_reply: ", llm_response)
     output_audio_local_file_path = convert_text_to_audio(llm_response, language)
-
-    return output_audio_local_file_path, llm_response, user_query
+    return output_audio_local_file_path, llm_response
 
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
