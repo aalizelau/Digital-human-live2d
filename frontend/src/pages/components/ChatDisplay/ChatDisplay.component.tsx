@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ScrollArea } from "@/components/ui/scroll-area" // Adjust import paths as necessary
+import { ScrollArea } from "@/components/ui/scroll-area" 
+import { useRouter } from 'next/router';
 
 
 interface ChatMessage {
@@ -23,6 +24,11 @@ const ChatDisplay: React.FC<ChatDisplayProps> = ({ chatData }) => {
   //     });
   //   }
   // }, [chatData]);
+
+  const router = useRouter();
+  if (!router.isFallback && !chatData) {
+    return <p>Post not found</p>;
+  }
   
   return (
     <ScrollArea className="flex-grow mb-4 pr-4" ref={scrollAreaRef}>
