@@ -1,6 +1,7 @@
 "use client";
+import { useRouter } from 'next/router';
 
-import React, { useState } from 'react';
+import React from 'react';
 import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
 import { MessageCircle, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -11,13 +12,17 @@ import VoiceAssistantContext from '../../context/VoiceAssistantContext';
 
 
 export default function ConversationContainer() {
-    const {
-      inputText,
-      chatData,
-      handleTextSubmit,
-      setInputText
-    } = useContext(VoiceAssistantContext);
+  const {
+    inputText,
+    chatData,
+    handleTextSubmit,
+    setInputText
+  } = useContext(VoiceAssistantContext);
 
+  const router = useRouter();
+    if (!router.isFallback && !chatData &&!inputText) {
+      return <p>Post not found</p>;
+    }
 
   return (
     <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 flex flex-col h-[calc(100vh-10rem)]">

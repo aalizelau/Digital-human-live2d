@@ -2,6 +2,8 @@
 
 import { useContext } from 'react';
 import VoiceAssistantContext from '../../context/VoiceAssistantContext';
+import { useRouter } from 'next/router';
+
 
 import VoiceAssistantAvatar from '../VoiceAssistantAvatar/VoiceAssistantAvatar.component';
 import VoiceRecorder from '../VoiceRecorder/VoiceRecorder.component';
@@ -15,6 +17,11 @@ const DigitalHumanContainer = () => {
     lastAIReplyURL,
     handleOnAudioPlayEnd,
   } = useContext(VoiceAssistantContext);
+
+  const router = useRouter();
+    if (!router.isFallback && !handleUserVoiceRecorded ) {
+      return <p>Post not found</p>;
+    }
 
   return (
     <div className="md:col-span-2 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6">
