@@ -1,6 +1,6 @@
 "use client";
 
-import { getAIReplyFromAudio, getAIReplyFromText } from "@/pages/services/aivoiceassistant.service"
+import { getTextFromAudio, getAIAudioFromText, getAIReplyFromText } from "@/pages/services/aivoiceassistant.service"
 import {useState} from "react"
 
 interface Message {
@@ -35,15 +35,20 @@ const useVoiceAssistant = ()=>{
   };
 
     const handleUserVoiceRecorded = async (userAudioData: Blob) => {
+      const userTextResult = await getTextFromAudio(userAudioData);
+      if (userTextResult) {
+        const { userQuery } = userTextResult;
+        setChatData((prevData) => [...prevData, { text: userQuery, isUser: true }]);
         setIsWaitingAIOutput(true);
-        const result = await getAIReplyFromAudio(userAudioData, selectedLanguage);
-        setIsWaitingAIOutput(false);
-        if (result) {
-          const { transcriptionText, userQuery, base64AudioData } = result;
-          setChatData((prevData) => [...prevData, {text: transcriptionText, isUser: true}]);
+        const aiAudioResult = await getAIAudioFromText(userQuery, selectedLanguage);
+        if (aiAudioResult) {
+          const { transcriptionText, base64AudioData } = aiAudioResult;
+          setIsWaitingAIOutput(false);
+          setChatData((prevData) => [...prevData, { text: transcriptionText, isUser: false }]);
           const audioData = 'data:audio/mpeg;base64,' + base64AudioData;
           setLastAIReplyURL(audioData);
         }
+      }
     }
 
     const handleOnAudioPlayEnd = ()=>{

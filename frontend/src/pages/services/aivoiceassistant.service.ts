@@ -2,35 +2,51 @@
 
 const BASE_URL = "https://chatcampus-production.up.railway.app"
 
-export const getAIReplyFromAudio = async (userAudioData: Blob, selectedLanguage: string) => {
-    const audioFile = new File([userAudioData], "userVoiceInput", {
-      type: "audio/mpeg",
-    });
-    const formData = new FormData();
-    formData.append("file", audioFile);
-    formData.append("language", selectedLanguage);
-  
-    const requestOptions = {
-      method: "POST",
-      body: formData,
-    };
-    try {
-      const result = await fetch(`${BASE_URL}/voice-assistant/audio-message`, requestOptions);
-      // Parse the JSON response
-      const data = await result.json();
-      const transcriptionText = data.transcription_text;
-      const userQuery = data.user_query;
-      const base64AudioData = data.audio_data;
-      return {
-        transcriptionText,
-        userQuery,
-        base64AudioData,
-      };
+export const getTextFromAudio = async (userAudioData: Blob) => {
+  const audioFile = new File([userAudioData], "userVoiceInput", {
+    type: "audio/mpeg",
+  });
+  const formData = new FormData();
+  formData.append("file", audioFile);
 
-    } catch (error) {
-      console.error("Error handling user voice data >> ", error);
-    }
+  const requestOptions = {
+    method: "POST",
+    body: formData,
   };
+  try {
+    const result = await fetch(`${BASE_URL}/voice-assistant/audio-message`, requestOptions);
+    // Parse the JSON response
+    const data = await result.json();
+    return {
+      userQuery: data.user_query,
+    };
+  } catch (error) {
+    console.error("Error handling user voice data >> ", error);
+  }
+};
+
+export const getAIAudioFromText = async (userQuery: string, selectedLanguage: string) => {
+  const formData = new FormData();
+  formData.append("language", selectedLanguage)
+  formData.append("user_query", userQuery)
+
+  const requestOptions = {
+    method: "POST",
+    body: formData,
+  };
+  try {
+    const result = await fetch(`${BASE_URL}/voice-assistant/audio-response`, requestOptions);
+    const data = await result.json();
+    const transcriptionText = data.ai_response_text;
+    const base64AudioData = data.audio_data;
+    return {
+      transcriptionText,
+      base64AudioData,
+    };
+  } catch (error) {
+    console.error("Error handling user query and return audio >> ", error);
+  }
+}
 
 export const getAIReplyFromText = async (textInput: string) => {
   const requestOptions = {
@@ -52,4 +68,4 @@ export const getAIReplyFromText = async (textInput: string) => {
   }
 };
 
-export default getAIReplyFromAudio;
+export default getAIReplyFromText;
