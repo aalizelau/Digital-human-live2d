@@ -12,12 +12,19 @@ import VoiceAssistantContext from '../../context/VoiceAssistantContext';
 
 
 export default function ConversationContainer() {
+  const context = useContext(VoiceAssistantContext);
+  if (!context) {
+    throw new Error(
+      'VoiceAssistantContext is undefined. Did you forget to wrap the component with VoiceAssistantProvider?'
+    );
+  }
+
   const {
     inputText,
     chatData,
     handleTextSubmit,
     setInputText
-  } = useContext(VoiceAssistantContext);
+  } = context;
 
   const router = useRouter();
     if (!router.isFallback && !chatData &&!inputText) {
