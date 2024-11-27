@@ -1,11 +1,13 @@
 import asyncio
+import os 
+
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from audio_helper import convert_file_to_readable_mp3
 from audio_helper import convert_audio_to_text
 from audio_helper import convert_text_to_audio
 
 from rag_helper import get_response_from_llm
-from rag_helper import get_pdf_preview
+from rag_helper import load_documents
 from rag_helper import get_text_chunks
 from rag_helper import get_context
 
@@ -36,8 +38,8 @@ async def handle_audio_from_user(file: bytes) -> str:
     return user_query
 
 async def generate_ai_response_audio(user_query, language) -> str:
-    extracted_text = get_pdf_preview(pdf_docs=pdfs_paths)
-    chunks = get_text_chunks(extracted_text)
+    extracted_documents = load_documents()
+    chunks = get_text_chunks(extracted_documents)
     retrieved_text = get_context(chunks)
     print("retrieved_text: ", retrieved_text)
     llm_response = get_response_from_llm(retrieved_text,user_query)
@@ -47,7 +49,7 @@ async def generate_ai_response_audio(user_query, language) -> str:
 
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
-    extracted_text = get_pdf_preview(pdf_docs=pdfs_paths)
+    extracted_text = load_documents()
     chunks = get_text_chunks(extracted_text)
     retrieved_text = get_context(chunks)
     print("retrieved_text: ", retrieved_text)

@@ -21,5 +21,5 @@ def load_documents():
     return documents
 
 #testing 
-load_documents()
+# load_documents()
 

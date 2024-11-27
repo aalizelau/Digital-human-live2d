@@ -55,14 +55,15 @@ def get_context():
         new_chunk_ids = [chunk.metadata["ids"] for chunk in new_chunks]
         db.add_documents(new_chunks, ids = new_chunk_ids)
     
-    results = db.similarity_search(query="machine learning",k=1)
-    print(results)
+    #test
+    # results = db.similarity_search(query="machine learning",k=1)
+    # print(results)
 
+    #vector search
+    retriever = db.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 2},
+    )
+    return retriever
 
-    # # vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
-    # # retriever = vectorstore.as_retriever(
-    # #     search_type="similarity",
-    # #     search_kwargs={"k": 2},
-    # # )
-    # # return retriever
-get_context()
+# get_context()
