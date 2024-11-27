@@ -14,7 +14,7 @@ def get_processed_chunks(chunks):
                     current_chunk_index =0
                     
             chunk_id = f"{current_page_id}:{current_chunk_index}"
-            chunk.metadata["chunk_id"] = chunk_id
+            chunk.metadata["id"] = chunk_id
             chunk_with_ids.append(chunk)
                     
             last_page_id = current_page_id

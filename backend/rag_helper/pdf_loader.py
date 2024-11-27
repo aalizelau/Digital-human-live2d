@@ -13,11 +13,11 @@ def load_documents():
     script_dir = os.path.dirname(__file__)
     backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
     directory_path  = os.path.join(backend_dir, 'PDF')
-    print(f"PDF File Path: {directory_path}")
-    # pdf_path=["/Users/funlau/Documents/ChatCampus/backend/pdf/KB_fake_news.pdf"] 
+    # print(f"PDF File Path: {directory_path}")
+    
     loader = PyPDFDirectoryLoader(directory_path)
     documents = loader.load()
-    print(documents[1])
+    # print(documents[1])
     return documents
 
 #testing 
