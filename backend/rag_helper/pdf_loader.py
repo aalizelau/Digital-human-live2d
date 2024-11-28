@@ -1,14 +1,8 @@
 from langchain.document_loaders import PyPDFDirectoryLoader
-import sys
 import os
 
 
 def load_documents():
-	# Add the backend directory to the Python module search path
-    script_dir = os.path.dirname(__file__)
-    backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
-    sys.path.append(backend_dir)
-
     #KB source
     script_dir = os.path.dirname(__file__)
     backend_dir = os.path.abspath(os.path.join(script_dir, '..'))

@@ -1,5 +1,11 @@
 import asyncio
+import sys
 import os 
+
+# Add the backend directory to the Python module search path
+script_dir = os.path.dirname(__file__)
+backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
+sys.path.append(backend_dir)
 
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from audio_helper import convert_file_to_readable_mp3
@@ -10,6 +16,7 @@ from rag_helper import get_response_from_llm
 from rag_helper import load_documents
 from rag_helper import get_text_chunks
 from rag_helper import get_context
+from rag_helper import get_processed_chunks
 
 def __get_transcoded_audio_file_path(data: bytes) -> str:
     local_file_path = persist_binary_file_locally(data, file_suffix='user_audio.mp3')
@@ -40,7 +47,8 @@ async def handle_audio_from_user(file: bytes) -> str:
 async def generate_ai_response_audio(user_query, language) -> str:
     extracted_documents = load_documents()
     chunks = get_text_chunks(extracted_documents)
-    retrieved_text = get_context(chunks)
+    chunks_with_ids= get_processed_chunks(chunks)
+    retrieved_text = get_context(chunks_with_ids)
     print("retrieved_text: ", retrieved_text)
     llm_response = get_response_from_llm(retrieved_text,user_query)
     print("ai_text_reply: ", llm_response)
@@ -49,9 +57,10 @@ async def generate_ai_response_audio(user_query, language) -> str:
 
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
-    extracted_text = load_documents()
-    chunks = get_text_chunks(extracted_text)
-    retrieved_text = get_context(chunks)
+    extracted_documents = load_documents()
+    chunks = get_text_chunks(extracted_documents)
+    chunks_with_ids= get_processed_chunks(chunks)
+    retrieved_text = get_context(chunks_with_ids)
     print("retrieved_text: ", retrieved_text)
     llm_response = get_response_from_llm(retrieved_text,user_input)
     print("ai_text_reply: ", llm_response)
@@ -66,7 +75,7 @@ async def handle_text_from_user(user_input: str) -> str:
 #     asyncio.run(handle_audio_from_user(mp3_data,"zh-CN"))
 
 # testing text input 
-# if __name__ == "__main__":
-#     text_input = "what is fake news?"
-#     asyncio.run(handle_text_from_user(text_input))
+if __name__ == "__main__":
+    text_input = "what is information literacy?"
+    asyncio.run(handle_text_from_user(text_input))
 
