@@ -17,7 +17,6 @@ def convert_text_to_audio(text, language, filename="response_output.mp3"):
     return audio_file_path
     
 # if __name__ == "__main__":
-#     # test_text = "Hello, this is a test of the text-to-speech functionality!"
 #     text = "妳好，這是一個中文語言的測試"
 #     language= "zh-CN"
 #     output_filename = convert_text_to_audio(text,language)

@@ -75,7 +75,7 @@ async def handle_text_from_user(user_input: str) -> str:
 #     asyncio.run(handle_audio_from_user(mp3_data,"zh-CN"))
 
 # testing text input 
-if __name__ == "__main__":
-    text_input = "what is information literacy?"
-    asyncio.run(handle_text_from_user(text_input))
+# if __name__ == "__main__":
+#     text_input = "any research?"
+#     asyncio.run(handle_text_from_user(text_input))
 
