@@ -1,7 +1,7 @@
 "use client";
 
-const BASE_URL = "https://chatcampus-production.up.railway.app"
-// const BASE_URL = "http://localhost:8000"
+//backend API
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; 
 
 export const getTextFromAudio = async (userAudioData: Blob) => {
   const audioFile = new File([userAudioData], "userVoiceInput", {
