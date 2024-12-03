@@ -2,31 +2,17 @@ from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
 from langchain_chroma import Chroma
-from chromadb.config import Settings
-import chromadb
+from langchain.schema import Document
+
 
 def add_data_to_vector_store(chunks_with_ids):
     load_dotenv()
     openai_api_key = os.getenv("OPENAI_API_KEY")
-    chroma_host = os.getenv("CHROMA_HOST")
-    chroma_client_auth_credentials = os.getenv("CHROMA_AUTH_CREDENTIALS")
-    chroma_auth_token_transport_header = os.getenv("CHROMA_AUTH_HEADER")
-
-    # Initialize ChromaDB client
-    chroma_client = chromadb.HttpClient(
-        host=chroma_host,
-        port=443,
-        ssl=True,
-        settings=Settings(
-            chroma_client_auth_provider="chromadb.auth.token_authn.TokenAuthClientProvider",
-            chroma_client_auth_credentials=chroma_client_auth_credentials,
-            chroma_auth_token_transport_header=chroma_auth_token_transport_header
-        )
-    )
 
     # Initialize vector store
+    PERSIST_DIRECTORY = "./chroma"
     db = Chroma(
-        client=chroma_client,
+        persist_directory=PERSIST_DIRECTORY,
         collection_name="campusAI",
         embedding_function=OpenAIEmbeddings()
     )
@@ -63,12 +49,12 @@ def add_data_to_vector_store(chunks_with_ids):
 #             metadata={"ids": "doc1:page1:chunk1"}
 #         ),
 #         Document(
-#             page_content="The Great Barrier Reef is the world's largest coral reef system, located off the coast of Queensland, Australia. It is home to diverse marine life.",
+#             page_content="The Great Barrier Reef is the world's largest coral reef system, located off the coast of Queensland, Australia.",
 #             metadata={"ids": "doc2:page2:chunk0"}
 #         ),
 #         Document(
 #             page_content="Basketball is a team sport where two teams compete to score points by shooting a ball through the opposing team's hoop.",
-#             metadata={"ids": "doc2:page3:chunk0"}
+#             metadata={"ids": "doc2:page3:chunk1"}
 #         ),
 #     ]
-#     ingest_data_to_vector_store(chunks_with_ids)
+#     add_data_to_vector_store(chunks_with_ids)
