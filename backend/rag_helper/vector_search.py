@@ -7,7 +7,7 @@ from chromadb.config import Settings
 import chromadb
 
 
-def get_context(chunks_with_ids):
+def get_context():
     load_dotenv()
     openai_api_key = os.getenv("OPENAI_API_KEY")
     chroma_host = os.getenv("CHROMA_HOST")
@@ -32,6 +32,13 @@ def get_context(chunks_with_ids):
 	collection_name="campusAI",
 	embedding_function = OpenAIEmbeddings()
     )
+
+    retriever = db.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 2},
+    )
+
+    return retriever
 
     # find existing ids
     existing_items = db.get(include=[])
