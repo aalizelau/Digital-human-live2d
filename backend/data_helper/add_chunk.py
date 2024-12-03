@@ -5,7 +5,7 @@ from langchain_chroma import Chroma
 from chromadb.config import Settings
 import chromadb
 
-def ingest_data_to_vector_store(chunks_with_ids):
+def add_data_to_vector_store(chunks_with_ids):
     load_dotenv()
     openai_api_key = os.getenv("OPENAI_API_KEY")
     chroma_host = os.getenv("CHROMA_HOST")

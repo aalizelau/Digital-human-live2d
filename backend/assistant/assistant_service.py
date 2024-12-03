@@ -12,12 +12,14 @@ from audio_helper import convert_file_to_readable_mp3
 from audio_helper import convert_audio_to_text
 from audio_helper import convert_text_to_audio
 
-from rag_helper import get_response_from_llm
-from rag_helper import load_documents
-from rag_helper import get_text_chunks
-from rag_helper import get_context
-from rag_helper import get_processed_chunks
-from rag_helper import llm_test
+from rag_helper.llm_response import get_response_from_llm
+from rag_helper.vector_search import get_context
+from rag_helper.llm_test import llm_test
+
+from data_helper.pdf_loader import load_documents
+from data_helper.split_text import get_text_chunks
+from data_helper.process_chunk import get_processed_chunks
+from data_helper.add_chunk import add_data_to_vector_store
 
 async def test_wrapper(input_text):
     return llm_test(input_text)
@@ -49,26 +51,26 @@ async def handle_audio_from_user(file: bytes) -> str:
     return user_query
 
 async def generate_ai_response_audio(user_query, language) -> str:
-    extracted_documents = load_documents()
-    chunks = get_text_chunks(extracted_documents)
-    chunks_with_ids= get_processed_chunks(chunks)
-    retrieved_text = get_context(chunks_with_ids)
-    print("retrieved_text: ", retrieved_text)
-    llm_response = get_response_from_llm(retrieved_text,user_query)
+    retriever = get_context()
+    llm_response = get_response_from_llm(retriever,user_query)
     print("ai_text_reply: ", llm_response)
     output_audio_local_file_path = convert_text_to_audio(llm_response, language)
     return output_audio_local_file_path, llm_response
 
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
+    retriever = get_context()
+    llm_response = get_response_from_llm(retriever,user_input)
+    print("ai_text_reply: ", llm_response)
+    return llm_response
+
+async def data_pipeline():
+    print("data pipeline start")
     extracted_documents = load_documents()
     chunks = get_text_chunks(extracted_documents)
     chunks_with_ids= get_processed_chunks(chunks)
-    retrieved_text = get_context(chunks_with_ids)
-    print("retrieved_text: ", retrieved_text)
-    llm_response = get_response_from_llm(retrieved_text,user_input)
-    print("ai_text_reply: ", llm_response)
-    return llm_response
+    add_data_to_vector_store(chunks_with_ids)
+    print("data pipeline done")
 
 # testing audio 
 # if __name__ == "__main__":
@@ -78,9 +80,17 @@ async def handle_text_from_user(user_input: str) -> str:
 #     # Running the async function in synchronous context for testing
 #     asyncio.run(handle_audio_from_user(mp3_data,"zh-CN"))
 
+# test audio response
+# user_query="best advice you could give"
+# language = "en"
+# asyncio.run(generate_ai_response_audio(user_query, language))
+
 # testing text input 
 # if __name__ == "__main__":
 #     text_input = "any research?"
 #     asyncio.run(handle_text_from_user(text_input))
 
 # asyncio.run(test_wrapper("I love you"))
+
+# asyncio.run(data_pipeline())
+
