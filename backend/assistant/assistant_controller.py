@@ -1,9 +1,14 @@
 from fastapi import APIRouter, UploadFile, File, Form, Body
 from fastapi.responses import FileResponse
-from assistant.assistant_service import handle_audio_from_user, handle_text_from_user, generate_ai_response_audio
+from assistant.assistant_service import handle_audio_from_user, handle_text_from_user, generate_ai_response_audio, test_wrapper
 import base64
 
 controller = APIRouter(prefix='/voice-assistant')
+
+@controller.post('/test',status_code=200)
+async def test_speed(text_data: str = Body(...)):
+       ai_response = await test_wrapper(text_data)
+       return {"response": ai_response}
 
 
 @controller.post('/audio-message', status_code=200)
@@ -31,5 +36,6 @@ async def handle_receive_user_query(
 
 @controller.post('/text-message', status_code=200)
 async def handle_receive_text_data(text_data: str = Body(...)):
+      print("information sent: ", text_data)
       ai_response = await handle_text_from_user(text_data)
       return {"response": ai_response}

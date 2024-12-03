@@ -17,6 +17,10 @@ from rag_helper import load_documents
 from rag_helper import get_text_chunks
 from rag_helper import get_context
 from rag_helper import get_processed_chunks
+from rag_helper import llm_test
+
+async def test_wrapper(input_text):
+    return llm_test(input_text)
 
 def __get_transcoded_audio_file_path(data: bytes) -> str:
     local_file_path = persist_binary_file_locally(data, file_suffix='user_audio.mp3')
@@ -79,3 +83,4 @@ async def handle_text_from_user(user_input: str) -> str:
 #     text_input = "any research?"
 #     asyncio.run(handle_text_from_user(text_input))
 
+# asyncio.run(test_wrapper("I love you"))
