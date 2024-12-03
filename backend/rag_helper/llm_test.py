@@ -9,7 +9,8 @@ def llm_test(input_text):
     load_dotenv()
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
-    model = ChatOpenAI(model="gpt-4o-mini")
+    # model = ChatOpenAI(model="gpt-4o-mini")
+    model = ChatOpenAI(model="gpt-3.5-turbo")
 
     messages = [
         SystemMessage("Translate the following from English into Italian"),
