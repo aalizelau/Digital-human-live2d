@@ -35,21 +35,43 @@ const useVoiceAssistant = ()=>{
   };
 
     const handleUserVoiceRecorded = async (userAudioData: Blob) => {
-      const userTextResult = await getTextFromAudio(userAudioData);
-      if (userTextResult) {
+      try{
+        const userTextResult = await getTextFromAudio(userAudioData);
+        if (!userTextResult) return;
         const { userQuery } = userTextResult;
         setChatData((prevData) => [...prevData, { text: userQuery, isUser: true }]);
+
         setIsWaitingAIOutput(true);
-        const aiAudioResult = await getAIAudioFromText(userQuery, selectedLanguage);
-        if (aiAudioResult) {
-          const { transcriptionText, base64AudioData } = aiAudioResult;
-          setIsWaitingAIOutput(false);
-          setChatData((prevData) => [...prevData, { text: transcriptionText, isUser: false }]);
-          const audioData = 'data:audio/mpeg;base64,' + base64AudioData;
-          setLastAIReplyURL(audioData);
+        let aiResponseText = '';
+        try {
+          const result = await getAIReplyFromText(userQuery);
+          if (result) {
+            aiResponseText = result.aiResponseText;
+            setChatData((prevData) => [...prevData, { text: aiResponseText, isUser: false }]);
+          }
+        } catch (aiReplyError) {
+          console.error("Error getting AI reply:", aiReplyError);
+        } finally {
+          setIsWaitingAIOutput(false); 
         }
+    
+        // Convert AI text reply to audio
+        if (aiResponseText) {
+          try {
+            const aiAudioResult = await getAIAudioFromText(aiResponseText, selectedLanguage);
+            if (aiAudioResult) {
+              const url = URL.createObjectURL(aiAudioResult);
+              setLastAIReplyURL(url);
+            }
+          } catch (aiAudioError) {
+            console.error("Error generating AI audio:", aiAudioError);
+          }
+        }
+      } catch (error) {
+        console.error("Error handling user voice input:", error);
+        setIsWaitingAIOutput(false); // Reset waiting state on failure
       }
-    }
+    };
 
     const handleOnAudioPlayEnd = ()=>{
         setLastAIReplyURL(undefined)

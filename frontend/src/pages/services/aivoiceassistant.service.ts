@@ -26,24 +26,18 @@ export const getTextFromAudio = async (userAudioData: Blob) => {
   }
 };
 
-export const getAIAudioFromText = async (userQuery: string, selectedLanguage: string) => {
+export const getAIAudioFromText = async (ai_response_text: string, selectedLanguage: string) => {
   const formData = new FormData();
   formData.append("language", selectedLanguage)
-  formData.append("user_query", userQuery)
+  formData.append("text", ai_response_text )
 
   const requestOptions = {
     method: "POST",
     body: formData,
   };
   try {
-    const result = await fetch(`${BASE_URL}/voice-assistant/audio-response`, requestOptions);
-    const data = await result.json();
-    const transcriptionText = data.ai_response_text;
-    const base64AudioData = data.audio_data;
-    return {
-      transcriptionText,
-      base64AudioData,
-    };
+    const result = await fetch(`${BASE_URL}/voice-assistant/tts`, requestOptions);
+    return await result.blob()
   } catch (error) {
     console.error("Error handling user query and return audio >> ", error);
   }
