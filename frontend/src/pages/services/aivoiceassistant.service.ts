@@ -15,7 +15,7 @@ export const getTextFromAudio = async (userAudioData: Blob) => {
     body: formData,
   };
   try {
-    const result = await fetch(`${BASE_URL}/voice-assistant/audio-message`, requestOptions);
+    const result = await fetch(`${BASE_URL}/voice-assistant/stt`, requestOptions);
     // Parse the JSON response
     const data = await result.json();
     return {
