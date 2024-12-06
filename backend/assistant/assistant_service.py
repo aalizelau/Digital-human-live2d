@@ -50,12 +50,9 @@ async def handle_audio_from_user(file: bytes) -> str:
             os.remove(transcoded_user_audio_file_path)
     return user_query
 
-async def generate_ai_response_audio(user_query, language) -> str:
-    retriever = get_context()
-    llm_response = get_response_from_llm(retriever,user_query)
-    print("ai_text_reply: ", llm_response)
-    output_audio_local_file_path = convert_text_to_audio(llm_response, language)
-    return output_audio_local_file_path, llm_response
+async def generate_audio(text, language) -> str:
+    output_audio_local_file_path = convert_text_to_audio(text, language)
+    return output_audio_local_file_path
 
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
