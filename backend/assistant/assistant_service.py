@@ -10,7 +10,7 @@ sys.path.append(backend_dir)
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from audio_helper import convert_file_to_readable_mp3
 from audio_helper import convert_audio_to_text
-from audio_helper import convert_text_to_audio
+from audio_helper.cloud_tts import convert_text_to_audio
 
 from rag_helper.llm_response import get_response_from_llm
 from rag_helper.vector_search import get_context
