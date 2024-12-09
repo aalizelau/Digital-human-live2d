@@ -14,9 +14,10 @@ async def test_speed(text_data: str = Body(...)):
 @controller.post('/stt', status_code=200)
 async def handle_receive_audio_data(
         file: UploadFile = File(...),
+        language: str = Form(...)
     ):
         file_data = await file.read()
-        user_query = await handle_audio_from_user(file_data)
+        user_query = await handle_audio_from_user(file_data,language)
         return { "user_query": user_query }
 
 @controller.post('/tts', status_code=200)

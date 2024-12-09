@@ -3,7 +3,7 @@ import os
 import base64
 from dotenv import load_dotenv
 
-def convert_audio_to_text(audio_bytes) -> speech.RecognizeResponse:
+def convert_audio_to_text(audio_bytes, language) -> speech.RecognizeResponse:
     load_dotenv()
     encoded_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
     decoded_key = base64.b64decode(encoded_key).decode("utf-8")
@@ -25,7 +25,7 @@ def convert_audio_to_text(audio_bytes) -> speech.RecognizeResponse:
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.MP3,
         sample_rate_hertz=16000,
-        language_code="en-US",
+        language_code=language,
     )
     
     # Detects speech in the audio file

@@ -22,9 +22,9 @@ from data_helper.add_chunk import add_data_to_vector_store
 async def test_wrapper(input_text):
     return llm_test(input_text)
 
-async def handle_audio_from_user(audio_file: bytes) -> str:
+async def handle_audio_from_user(audio_file: bytes, language:str) -> str:
     print("handle audio from user")
-    user_query = convert_audio_to_text(audio_file)
+    user_query = convert_audio_to_text(audio_file, language)
     print("transcription: ", user_query)
     return user_query
 

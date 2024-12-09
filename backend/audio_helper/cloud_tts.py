@@ -17,8 +17,6 @@ def convert_text_to_audio(text, language, filename="response_output.mp3"):
         temp_file.write(decoded_key)
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
 
-    print("Converting response to speech...")
-
     script_dir = os.path.dirname(__file__)
     backend_dir = os.path.abspath(os.path.join(script_dir, ".."))
     audio_folder = os.path.join(backend_dir, "audio")
@@ -54,7 +52,7 @@ def convert_text_to_audio(text, language, filename="response_output.mp3"):
 #     language= "cmn-CN"
 #     output_filename = convert_text_to_audio(text,language)
 
-if __name__ == "__main__":
-    text = "妳好，這是一個廣東話語言的測試"
-    language= "Yue-HK"
-    output_filename = convert_text_to_audio(text,language)
+# if __name__ == "__main__":
+#     text = "妳好，這是一個廣東話語言的測試"
+#     language= "Yue-HK"
+#     output_filename = convert_text_to_audio(text,language)
