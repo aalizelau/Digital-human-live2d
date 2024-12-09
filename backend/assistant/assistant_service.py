@@ -7,8 +7,6 @@ script_dir = os.path.dirname(__file__)
 backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
 sys.path.append(backend_dir)
 
-from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
-from audio_helper import convert_file_to_readable_mp3
 from audio_helper.google_stt import convert_audio_to_text
 from audio_helper.cloud_tts import convert_text_to_audio
 
@@ -24,25 +22,10 @@ from data_helper.add_chunk import add_data_to_vector_store
 async def test_wrapper(input_text):
     return llm_test(input_text)
 
-def __get_transcoded_audio_file_path(data: bytes) -> str:
-    local_file_path = persist_binary_file_locally(data, file_suffix='user_audio.mp3')
-    local_output_file_path = create_unique_tmp_file(file_suffix='transcoded_user_audio.mp3')
-    try:
-        convert_file_to_readable_mp3(
-            local_input_file_path=local_file_path,
-            local_output_file_path=local_output_file_path
-        )
-    finally:
-        if os.path.exists(local_file_path):
-            os.remove(local_file_path)
-    if not os.path.exists(local_output_file_path):
-        raise FileNotFoundError(f"Transcoded file not created: {local_output_file_path}")
-    return local_output_file_path
-
-
 async def handle_audio_from_user(audio_file: bytes) -> str:
     print("handle audio from user")
     user_query = convert_audio_to_text(audio_file)
+    print("transcription: ", user_query)
     return user_query
 
 async def generate_audio(text, language) -> str:
@@ -67,14 +50,6 @@ async def data_pipeline():
     chunks_with_ids= get_processed_chunks(chunks)
     add_data_to_vector_store(chunks_with_ids)
     print("data pipeline done")
-
-# testing audio 
-# if __name__ == "__main__":
-#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/CN_test_input.m4a", "rb") as f:
-#         mp3_data = f.read()
-
-#     # Running the async function in synchronous context for testing
-#     asyncio.run(handle_audio_from_user(mp3_data,"zh-CN"))
 
 # test audio response
 # user_query="best advice you could give"

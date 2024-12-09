@@ -17,7 +17,6 @@ def convert_audio_to_text(audio_bytes) -> speech.RecognizeResponse:
         temp_file.write(decoded_key)
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
 
-    print("Converting audio to text...")
     # Instantiates a client
     client = speech.SpeechClient()
 
@@ -28,12 +27,18 @@ def convert_audio_to_text(audio_bytes) -> speech.RecognizeResponse:
         sample_rate_hertz=16000,
         language_code="en-US",
     )
-
+    
     # Detects speech in the audio file
-    response = client.recognize(config=config, audio=audio)
+    try:
+        # Detects speech in the audio file
+        response = client.recognize(config=config, audio=audio)
 
-    for result in response.results:
-        print(f"Transcript: {result.alternatives[0].transcript}")
+        # Concatenate all results into a single string
+        transcript = " ".join(result.alternatives[0].transcript for result in response.results)
+        return transcript
+    except Exception as e:
+        print(f"Error during recognition: {e}")
+        return None
 
 # testing audio 
 # if __name__ == "__main__":
