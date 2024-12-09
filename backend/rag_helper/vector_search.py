@@ -15,15 +15,12 @@ def get_context():
 	embedding_function = OpenAIEmbeddings()
     )
 
-    #test
-    # results = db.similarity_search(query="machine learning",k=1)
-    # print(results)
-
     retriever = db.as_retriever(
         search_type="similarity",
         search_kwargs={"k": 2},
     )
-
+    # docs = retriever.invoke(query="machine learning")
+    # print(docs)
     return retriever
 
 #test

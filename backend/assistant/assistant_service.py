@@ -57,6 +57,10 @@ async def generate_audio(text, language) -> str:
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
     retriever = get_context()
+    docs = retriever.invoke(user_input)
+    print("Retrieved Document IDs:")
+    for doc in docs:
+        print(doc.metadata.get("ids"))
     llm_response = get_response_from_llm(retriever,user_input)
     print("ai_text_reply: ", llm_response)
     return llm_response
@@ -84,7 +88,7 @@ async def data_pipeline():
 
 # testing text input 
 # if __name__ == "__main__":
-#     text_input = "any research?"
+#     text_input = "any research about how fake news spread?"
 #     asyncio.run(handle_text_from_user(text_input))
 
 # asyncio.run(test_wrapper("I love you"))
