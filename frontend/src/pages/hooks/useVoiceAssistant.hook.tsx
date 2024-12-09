@@ -11,7 +11,7 @@ interface Message {
 const useVoiceAssistant = ()=>{
     const [isWaitingAIOutput,setIsWaitingAIOutput] = useState<boolean>(false)
     const [lastAIReplyURL,setLastAIReplyURL] = useState<string|undefined>(undefined)
-    const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
+    const [selectedLanguage, setSelectedLanguage] = useState<string>("en-US"); //default language 
     const [chatData, setChatData] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
 
@@ -36,7 +36,7 @@ const useVoiceAssistant = ()=>{
 
     const handleUserVoiceRecorded = async (userAudioData: Blob) => {
       try{
-        const userTextResult = await getTextFromAudio(userAudioData);
+        const userTextResult = await getTextFromAudio(userAudioData,selectedLanguage);
         if (!userTextResult) return;
         const { userQuery } = userTextResult;
         setChatData((prevData) => [...prevData, { text: userQuery, isUser: true }]);

@@ -1,7 +1,5 @@
 from google.cloud import speech
 import os
-import base64
-from dotenv import load_dotenv
 
 def convert_audio_to_text(audio_bytes, language) -> speech.RecognizeResponse:
     load_dotenv()

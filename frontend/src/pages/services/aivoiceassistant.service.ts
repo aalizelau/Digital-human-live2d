@@ -3,12 +3,13 @@
 //backend API
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; 
 
-export const getTextFromAudio = async (userAudioData: Blob) => {
+export const getTextFromAudio = async (userAudioData: Blob, selectedLanguage: string) => {
   const audioFile = new File([userAudioData], "userVoiceInput", {
     type: "audio/mpeg",
   });
   const formData = new FormData();
   formData.append("file", audioFile);
+  formData.append("language", selectedLanguage)
 
   const requestOptions = {
     method: "POST",

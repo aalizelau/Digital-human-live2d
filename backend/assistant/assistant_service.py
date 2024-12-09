@@ -1,6 +1,8 @@
 import asyncio
 import sys
 import os 
+import base64
+from dotenv import load_dotenv
 
 # Add the backend directory to the Python module search path
 script_dir = os.path.dirname(__file__)
@@ -50,6 +52,18 @@ async def data_pipeline():
     chunks_with_ids= get_processed_chunks(chunks)
     add_data_to_vector_store(chunks_with_ids)
     print("data pipeline done")
+
+def setup_credentials():
+    load_dotenv()
+    encoded_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
+    decoded_key = base64.b64decode(encoded_key).decode("utf-8")
+
+    temp_dir = "./tmp"
+    os.makedirs(temp_dir, exist_ok=True)
+    temp_credentials_path = os.path.join(temp_dir, "service-account-key.json")
+    with open(temp_credentials_path, "w") as temp_file:
+        temp_file.write(decoded_key)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
 
 # test audio response
 # user_query="best advice you could give"

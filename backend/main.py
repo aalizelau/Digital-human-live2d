@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from assistant.assistant_controller import controller as AssistantAudioController
-from assistant.assistant_service import data_pipeline
+from assistant.assistant_service import data_pipeline, setup_credentials
 from contextlib import asynccontextmanager
 
 app = FastAPI()
@@ -15,6 +15,7 @@ origins = [
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("running start up process")
+    setup_credentials()
     await data_pipeline()
     yield  # This yields control to allow the application to run
     # Shutdown: Add cleanup code if needed
