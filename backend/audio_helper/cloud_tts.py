@@ -1,7 +1,19 @@
 from google.cloud import texttospeech
-import os 
+import os
+import base64
+from dotenv import load_dotenv
 
 def convert_text_to_audio(text, language, filename="response_output.mp3"):
+    load_dotenv()
+    encoded_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
+    decoded_key = base64.b64decode(encoded_key).decode("utf-8")
+    # Write the decoded JSON to a temporary file
+    temp_credentials_path = "./tmp/service-account-key.json"
+    print("Converting response to speech...")
+    with open(temp_credentials_path, "w") as temp_file:
+        temp_file.write(decoded_key)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
+
     print("Converting response to speech...")
 
     script_dir = os.path.dirname(__file__)
