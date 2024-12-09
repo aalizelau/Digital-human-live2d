@@ -2,19 +2,6 @@ from google.cloud import speech
 import os
 
 def convert_audio_to_text(audio_bytes, language) -> speech.RecognizeResponse:
-    load_dotenv()
-    encoded_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
-    decoded_key = base64.b64decode(encoded_key).decode("utf-8")
-
-    # Write the decoded JSON to a temporary file
-    temp_dir = "./tmp"
-    if not os.path.exists(temp_dir):
-        os.makedirs(temp_dir)
-    temp_credentials_path = os.path.join(temp_dir, "service-account-key.json")
-    with open(temp_credentials_path, "w") as temp_file:
-        temp_file.write(decoded_key)
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
-
     # Instantiates a client
     client = speech.SpeechClient()
 

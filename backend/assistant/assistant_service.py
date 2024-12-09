@@ -64,6 +64,7 @@ def setup_credentials():
     with open(temp_credentials_path, "w") as temp_file:
         temp_file.write(decoded_key)
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
+    print("finish setting up credentials")
 
 # test audio response
 # user_query="best advice you could give"
