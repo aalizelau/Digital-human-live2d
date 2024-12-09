@@ -9,7 +9,7 @@ sys.path.append(backend_dir)
 
 from utils.file_utils import persist_binary_file_locally, create_unique_tmp_file
 from audio_helper import convert_file_to_readable_mp3
-from audio_helper import convert_audio_to_text
+from audio_helper.google_stt import convert_audio_to_text
 from audio_helper.cloud_tts import convert_text_to_audio
 
 from rag_helper.llm_response import get_response_from_llm
@@ -40,14 +40,9 @@ def __get_transcoded_audio_file_path(data: bytes) -> str:
     return local_output_file_path
 
 
-async def handle_audio_from_user(file: bytes) -> str:
+async def handle_audio_from_user(audio_file: bytes) -> str:
     print("handle audio from user")
-    transcoded_user_audio_file_path = __get_transcoded_audio_file_path(file)
-    try:
-        user_query = convert_audio_to_text(transcoded_user_audio_file_path)
-    finally:
-        if os.path.exists(transcoded_user_audio_file_path):
-            os.remove(transcoded_user_audio_file_path)
+    user_query = convert_audio_to_text(audio_file)
     return user_query
 
 async def generate_audio(text, language) -> str:

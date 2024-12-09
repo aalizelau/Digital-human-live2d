@@ -1,16 +1,30 @@
 from google.cloud import speech
+import os
+import base64
+from dotenv import load_dotenv
 
-def run_quickstart() -> speech.RecognizeResponse:
+def convert_audio_to_text(audio_bytes) -> speech.RecognizeResponse:
+    load_dotenv()
+    encoded_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64")
+    decoded_key = base64.b64decode(encoded_key).decode("utf-8")
+
+    # Write the decoded JSON to a temporary file
+    temp_dir = "./tmp"
+    if not os.path.exists(temp_dir):
+        os.makedirs(temp_dir)
+    temp_credentials_path = os.path.join(temp_dir, "service-account-key.json")
+    with open(temp_credentials_path, "w") as temp_file:
+        temp_file.write(decoded_key)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_credentials_path
+
+    print("Converting audio to text...")
     # Instantiates a client
     client = speech.SpeechClient()
 
-    # The name of the audio file to transcribe
-    gcs_uri = "gs://cloud-samples-data/speech/brooklyn_bridge.raw"
-
-    audio = speech.RecognitionAudio(uri=gcs_uri)
+    audio = speech.RecognitionAudio(content=audio_bytes)
 
     config = speech.RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        encoding=speech.RecognitionConfig.AudioEncoding.MP3,
         sample_rate_hertz=16000,
         language_code="en-US",
     )
@@ -20,3 +34,9 @@ def run_quickstart() -> speech.RecognizeResponse:
 
     for result in response.results:
         print(f"Transcript: {result.alternatives[0].transcript}")
+
+# testing audio 
+# if __name__ == "__main__":
+#     with open("/Users/funlau/Documents/ChatCampus/backend/audio/Eng_test_input_2.mp3", "rb") as f:
+#         mp3_data = f.read()
+#     convert_audio_to_text(mp3_data) 

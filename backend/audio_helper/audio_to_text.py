@@ -1,17 +1,17 @@
-from openai import OpenAI
-from dotenv import load_dotenv
+# from openai import OpenAI
+# from dotenv import load_dotenv
 
-load_dotenv()
-client = OpenAI()
+# load_dotenv()
+# client = OpenAI()
 
-def convert_audio_to_text(local_input_file_path):
-    audio_file= open(local_input_file_path, "rb")
-    transcription = client.audio.transcriptions.create(
-    model="whisper-1", 
-    file=audio_file
-    )
-    print(transcription.text)
-    return transcription.text
+# def convert_audio_to_text(local_input_file_path):
+#     audio_file= open(local_input_file_path, "rb")
+#     transcription = client.audio.transcriptions.create(
+#     model="whisper-1", 
+#     file=audio_file
+#     )
+#     print(transcription.text)
+#     return transcription.text
 
 
 
