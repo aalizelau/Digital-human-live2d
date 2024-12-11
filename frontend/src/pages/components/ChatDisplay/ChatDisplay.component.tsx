@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollArea } from "@/components/ui/scroll-area" 
 import { useRouter } from 'next/router';
@@ -15,42 +15,49 @@ interface ChatDisplayProps {
 }
 
 const ChatDisplay: React.FC<ChatDisplayProps> = ({ chatData }) => {
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  // Ref for the chat container
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-  // useEffect(() => {
-  //   if (scrollAreaRef.current) {
-  //     requestAnimationFrame(() => {
-  //       scrollAreaRef.current!.scrollTop = scrollAreaRef.current!.scrollHeight;
-  //     });
-  //   }
-  // }, [chatData]);
+  // Function to scroll to the bottom of the chat container
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollIntoView(false);
+    }
+  };
+  // Scroll on component mount (initial load)
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
-  const router = useRouter();
-  if (!router.isFallback && !chatData) {
-    return <p>Post not found</p>;
-  }
+  // Scroll whenever new messages are added
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatData]);
+
   
   return (
-    <ScrollArea className="flex-grow mb-4 pr-4" ref={scrollAreaRef}>
-      <AnimatePresence initial={false}>
-        {chatData.map((message,index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className={`mb-3 p-3 rounded-lg ${
-              message.isUser
-                ? 'bg-blue-900 bg-opacity-50 text-blue-100 ml-4'
-                : 'bg-purple-900 bg-opacity-50 text-purple-100 mr-4'
-            }`}
-          >
-            <strong>{message.isUser ? 'You: ' : 'Campus AI: '}</strong>
-            <p>{message.text}</p>
-          </motion.div>
-        ))}
-      </AnimatePresence>
+    <ScrollArea className="flex-grow mb-4 pr-4">
+        <AnimatePresence initial={false}>
+          {chatData.map((message,index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className={`mb-3 p-3 rounded-lg ${
+                message.isUser
+                  ? 'bg-blue-900 bg-opacity-50 text-blue-100 ml-4'
+                  : 'bg-purple-900 bg-opacity-50 text-purple-100 mr-4'
+              }`}
+            >
+              <strong>{message.isUser ? 'You: ' : 'Campus AI: '}</strong>
+              <p>{message.text}</p>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      {/* Scroll anchor */}
+      <div ref={chatContainerRef}></div>
     </ScrollArea>
   );
 };

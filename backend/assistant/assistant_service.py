@@ -37,10 +37,10 @@ async def generate_audio(text, language) -> str:
 async def handle_text_from_user(user_input: str) -> str:
     print("handle text from user")
     retriever = get_context()
-    docs = retriever.invoke(user_input)
-    print("Retrieved Document IDs:")
-    for doc in docs:
-        print(doc.metadata.get("ids"))
+    # docs = retriever.invoke(user_input)
+    # print("Retrieved Document IDs:")
+    # for doc in docs:
+    #     print(doc.metadata.get("ids"))
     llm_response = get_response_from_llm(retriever,user_input)
     print("ai_text_reply: ", llm_response)
     return llm_response
