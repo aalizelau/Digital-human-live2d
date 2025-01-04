@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 import VoiceAssistantProvider from './context/VoiceAssistantProvider';
 import DigitalHumanContainer from './components/DigitalHumanContainer/DigitalHumanContainer.component';
 import ConversationContainer from "./components/ConversationContainer/ConversationContainer.component"
@@ -13,6 +14,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Script src="/library/live2d.min.js"> </Script>
+      <Script src="/library/live2dcubismcore.js"></Script>
       <VoiceAssistantProvider>
       <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <HeaderContainer/>
