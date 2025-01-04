@@ -58,6 +58,7 @@ const DigitalHumanContainer =() => {
           autoDensity: true,
           antialias: true,
           resolution: window.devicePixelRatio,
+          transparent:true,
         });
 
         // Load the Live2D model
