@@ -62,7 +62,7 @@ const useVoiceAssistant = ()=>{
             const aiAudioResult = await getAIAudioFromText(aiResponseText, selectedLanguage);
             if (aiAudioResult) {
               const url = URL.createObjectURL(aiAudioResult);
-              setLastAIReplyURL(url);
+              // setLastAIReplyURL(url);
               // Call speaking with the generated audio result
               speaking(url);
             }
