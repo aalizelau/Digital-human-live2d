@@ -53,7 +53,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
       <button
         type="button"
         onClick={handleRecordToggle}
-        className={`rounded-full p-2 mr-1 ${
+        className={`rounded-full px-4 py-2 ${
           isRecording
             ? "bg-red-600 hover:bg-red-700 text-white"
             : "bg-blue-600 hover:bg-blue-700 text-white"

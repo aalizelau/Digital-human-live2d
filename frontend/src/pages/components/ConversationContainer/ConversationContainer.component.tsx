@@ -1,8 +1,6 @@
 "use client";
-import { useRouter } from 'next/router';
 
 import React from 'react';
-import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
 import { MessageCircle, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +8,10 @@ import { Input } from "@/components/ui/input";
 import { useContext } from 'react';
 import VoiceAssistantContext from '../../context/VoiceAssistantContext';
 
+import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
+import VoiceRecorder from '../VoiceRecorder/VoiceRecorder.component';
+import AudioPlayer from '../AudioPlayer/AudioPlayer.component';
+import ReactLoading from 'react-loading';
 
 export default function ConversationContainer() {
   const context = useContext(VoiceAssistantContext);
@@ -23,13 +25,12 @@ export default function ConversationContainer() {
     inputText,
     chatData,
     handleTextSubmit,
-    setInputText
+    setInputText,
+    handleUserVoiceRecorded,
+    isWaitingAIOutput,
+    lastAIReplyURL,
+    handleOnAudioPlayEnd,
   } = context;
-
-  const router = useRouter();
-    if (!router.isFallback && !chatData &&!inputText) {
-      return <p>Post not found</p>;
-    }
 
   return (
     <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 flex flex-col h-[calc(100vh-10rem)]">
@@ -38,23 +39,33 @@ export default function ConversationContainer() {
         Conversation Dialog
       </h2>
       <ChatDisplay chatData={chatData} />
-      <form onSubmit={handleTextSubmit} className="flex gap-2 mt-4">
-        <Input
-          type="text"
-          placeholder="Type your message..."
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          className="flex-grow text-lg bg-black bg-opacity-50 border border-purple-500 text-white placeholder-purple-300 rounded-full px-4 py-2"
-          aria-label="Message input"
-        />
-        <Button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-2 flex items-center justify-center"
-          aria-label="Send message"
-        >
-          <Send className="w-5 h-5" />
-        </Button>
+      <form onSubmit={handleTextSubmit} className="flex items-center space-x-2 mt-4">
+        <div className="relative flex-1"> 
+          <Input
+            type="text"
+            placeholder="Type your message..."
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            className="w-full text-lg bg-black bg-opacity-50 border border-purple-500 text-white placeholder-purple-300 rounded-full px-4 py-2 pr-12"
+            aria-label="Message input"
+          />
+          <Button
+            type="submit"
+            className="absolute inset-y-0 right-2 text-purple-300 hover:text-purple-500 rounded-full p-2 flex items-center justify-center"
+            aria-label="Send message"
+          >
+            <Send className="w-5 h-5" />
+          </Button>
+        </div>
+        <VoiceRecorder onAudioRecordingComplete={handleUserVoiceRecorded}/>
       </form>
+      {isWaitingAIOutput && (
+        <ReactLoading type="bars" color="#4287f5" width={200} />
+      )}
+      <AudioPlayer
+        audioFileUrl={lastAIReplyURL}
+        onAudioPlayEnd={handleOnAudioPlayEnd}
+      />
     </div>
   );
 }
