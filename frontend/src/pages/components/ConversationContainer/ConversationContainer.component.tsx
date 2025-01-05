@@ -11,7 +11,7 @@ import VoiceAssistantContext from '../../context/VoiceAssistantContext';
 import ChatDisplay from '../ChatDisplay/ChatDisplay.component';
 import VoiceRecorder from '../VoiceRecorder/VoiceRecorder.component';
 import AudioPlayer from '../AudioPlayer/AudioPlayer.component';
-import ReactLoading from 'react-loading';
+import Loading from '../Loading/Loading.component'
 
 export default function ConversationContainer() {
   const context = useContext(VoiceAssistantContext);
@@ -39,6 +39,9 @@ export default function ConversationContainer() {
         Conversation Dialog
       </h2>
       <ChatDisplay chatData={chatData} />
+      {isWaitingAIOutput && (
+        <Loading/>
+      )}
       <form onSubmit={handleTextSubmit} className="flex items-center space-x-2 mt-4">
         <div className="relative flex-1"> 
           <Input
@@ -59,9 +62,6 @@ export default function ConversationContainer() {
         </div>
         <VoiceRecorder onAudioRecordingComplete={handleUserVoiceRecorded}/>
       </form>
-      {isWaitingAIOutput && (
-        <ReactLoading type="bars" color="#4287f5" width={200} />
-      )}
       <AudioPlayer
         audioFileUrl={lastAIReplyURL}
         onAudioPlayEnd={handleOnAudioPlayEnd}
