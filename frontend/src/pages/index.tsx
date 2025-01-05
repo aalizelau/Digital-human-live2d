@@ -17,7 +17,7 @@ export default function Home() {
       <Script src="/library/live2d.min.js"> </Script>
       <Script src="/library/live2dcubismcore.js"></Script>
       <VoiceAssistantProvider>
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="md:h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <HeaderContainer/>
         <main className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
           <DigitalHumanContainer/>

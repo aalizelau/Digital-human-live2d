@@ -47,7 +47,7 @@ const DigitalHumanContainer =() => {
         // Create a PIXI application
         const app = new PIXI.Application({
           view: canvas, // Link PIXI to the canvas
-          height: 1000,
+          height: 700,
           width: 700,
           autoDensity: true,
           antialias: true,
@@ -63,7 +63,7 @@ const DigitalHumanContainer =() => {
         // Add the model to the PIXI stage
         app.stage.addChild(model);
         model.scale.set(0.5);
-        model.position.set(0, -5);
+        model.position.set(30, -30);
       } catch (error) {
         console.error("Failed to initialize PIXI or load Live2D model:", error);
       }
@@ -73,7 +73,7 @@ const DigitalHumanContainer =() => {
   }, []);
 
   return (
-    <div className="md:col-span-2 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6">
+    <div className="md:col-span-2 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 h-[calc(100vh-7rem)] overflow-hidden">
       <canvas ref={canvasRef}> </canvas>
     </div>
   );

@@ -33,7 +33,7 @@ export default function ConversationContainer() {
   } = context;
 
   return (
-    <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 flex flex-col h-[calc(100vh-10rem)]">
+    <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 flex flex-col h-[calc(100vh-7rem)]">
       <h2 className="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 flex items-center">
         <MessageCircle className="w-8 h-8 mr-2 text-blue-400" />
         Conversation Dialog
