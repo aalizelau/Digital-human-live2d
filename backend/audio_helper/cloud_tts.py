@@ -12,12 +12,16 @@ def convert_text_to_audio(text, language, filename="response_output.mp3"):
     synthesis_input = texttospeech.SynthesisInput(text=text)
 
     voice = texttospeech.VoiceSelectionParams(
-        language_code=language, ssml_gender=texttospeech.SsmlVoiceGender.MALE
+        language_code=language, 
+        ssml_gender=texttospeech.SsmlVoiceGender.FEMALE,
+        # name="en-GB-Standard-A"
     )
 
     # Select the type of audio file you want returned
     audio_config = texttospeech.AudioConfig(
-        audio_encoding=texttospeech.AudioEncoding.MP3
+        audio_encoding=texttospeech.AudioEncoding.MP3,
+        pitch=6,
+        speaking_rate=0.9,
     )
 
     response = client.synthesize_speech(

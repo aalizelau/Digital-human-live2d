@@ -11,7 +11,8 @@ interface LanguageSelectorProps {
 }
 
 const languages = [
-  { code: 'en-US', name: 'English' },
+  // { code: 'en-US', name: 'English' },
+  { code: 'en-GB', name: 'English' },
   { code: 'cmn-CN', name: 'Mandarin' },
   { code: 'Yue-HK', name: 'Cantonese' },
 ]
