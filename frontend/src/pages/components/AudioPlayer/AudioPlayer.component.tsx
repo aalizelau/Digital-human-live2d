@@ -10,7 +10,7 @@ const AudioPlayer = ({audioFileUrl,onAudioPlayEnd}:AudioPlayerProps)=>{
         <div>
           {audioFileUrl && (
             <audio
-              controls={true}
+              // controls={true}
               autoPlay={true}
               onEnded={onAudioPlayEnd}
               src={audioFileUrl}
