@@ -14,6 +14,7 @@ const useVoiceAssistant = ()=>{
     const [selectedLanguage, setSelectedLanguage] = useState<string>("en-US"); //default language 
     const [chatData, setChatData] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
+    const [mouthOpen, setMouthOpen] = useState(0);
 
   const handleUserInput = async (input: string) => {
     setChatData((prev) => [...prev, { text: input, isUser: true }]);
@@ -62,6 +63,8 @@ const useVoiceAssistant = ()=>{
             if (aiAudioResult) {
               const url = URL.createObjectURL(aiAudioResult);
               setLastAIReplyURL(url);
+              // Call speaking with the generated audio result
+              speaking(url);
             }
           } catch (aiAudioError) {
             console.error("Error generating AI audio:", aiAudioError);
@@ -71,6 +74,38 @@ const useVoiceAssistant = ()=>{
         console.error("Error handling user voice input:", error);
         setIsWaitingAIOutput(false); // Reset waiting state on failure
       }
+    };
+
+    const speaking = async (Audiourl: string) => {
+      let audioContext = new (window.AudioContext);
+      const response = await fetch(Audiourl);
+      const audioData = await response.arrayBuffer();
+      const audioBuffer = await audioContext.decodeAudioData(audioData);
+  
+      const source = audioContext.createBufferSource();
+      const analyser = audioContext.createAnalyser();
+  
+      source.buffer = audioBuffer;
+      analyser.connect(audioContext.destination);
+      source.connect(analyser);
+  
+      source.start(0);
+  
+      const updateMouth = () => {
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(dataArray);
+  
+        const volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
+        const mouthOpen = Math.min(1, volume / 50); // 正規化到 [0, 1]
+  
+        setMouthOpen(mouthOpen); 
+  
+        if (audioContext.state !== "closed") {
+          requestAnimationFrame(updateMouth);
+        }
+      };
+  
+      updateMouth();
     };
 
     const handleOnAudioPlayEnd = ()=>{
@@ -92,6 +127,7 @@ const useVoiceAssistant = ()=>{
         inputText,
         setInputText,
         handleTextSubmit,
+        mouthOpen,
     }
 }
 

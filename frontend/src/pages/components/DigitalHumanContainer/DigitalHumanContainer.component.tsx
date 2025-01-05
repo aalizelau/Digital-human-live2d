@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import dynamic from 'next/dynamic';
+import VoiceAssistantContext from '../../context/VoiceAssistantContext';
 
 // import * as PIXI from 'pixi.js';
 // import { Live2DModel } from 'pixi-live2d-display';
@@ -21,7 +22,12 @@ declare global {
 }
 
 const DigitalHumanContainer =() => {
+  const {
+  mouthOpen
+} = useContext(VoiceAssistantContext);
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null); // Initialize with null
+  const modelRef = useRef<any>(null);
   
   // Run initialization logic after the component mounts
   useEffect(() => {
@@ -64,6 +70,10 @@ const DigitalHumanContainer =() => {
         app.stage.addChild(model);
         model.scale.set(0.5);
         model.position.set(30, -30);
+
+        // Store the model in the ref
+        modelRef.current = model;
+        
       } catch (error) {
         console.error("Failed to initialize PIXI or load Live2D model:", error);
       }
@@ -71,6 +81,12 @@ const DigitalHumanContainer =() => {
   
     initializePixi();
   }, []);
+
+  useEffect(() => {
+    if (modelRef.current) {
+      modelRef.current.internalModel.coreModel.setParamFloat("PARAM_MOUTH_OPEN_Y", mouthOpen);
+    }
+  }, [mouthOpen]); // trigger when there is an update of mouthOpen
 
   return (
     <div className="md:col-span-2 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 h-[calc(100vh-7rem)] overflow-hidden">
