@@ -12,17 +12,17 @@ const Loading = () =>{
         >
           <div className="flex space-x-1">
             <motion.div
-              className="w-3 h-3 bg-blue-500 rounded-full"
+              className="w-3 h-3 bg-yellow-300 rounded-full"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
             />
             <motion.div
-              className="w-3 h-3 bg-purple-500 rounded-full"
+              className="w-3 h-3 bg-orange-300 rounded-full"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse", delay: 0.2 }}
             />
             <motion.div
-              className="w-3 h-3 bg-pink-500 rounded-full"
+              className="w-3 h-3 bg-red-300 rounded-full"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse", delay: 0.4 }}
             />

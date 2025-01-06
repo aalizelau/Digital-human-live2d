@@ -89,7 +89,7 @@ const DigitalHumanContainer =() => {
   }, [mouthOpen]); // trigger when there is an update of mouthOpen
 
   return (
-    <div className="md:col-span-2 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 h-[calc(100vh-7rem)] overflow-hidden">
+    <div className="md:col-span-2 flex flex-col items-center justify-center bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 h-[calc(100vh-7rem)] overflow-hidden">
       <canvas ref={canvasRef}> </canvas>
     </div>
   );

@@ -33,9 +33,9 @@ export default function ConversationContainer() {
   } = context;
 
   return (
-    <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-2xl shadow-xl border border-purple-500 p-6 flex flex-col h-[calc(100vh-7rem)]">
-      <h2 className="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 flex items-center">
-        <MessageCircle className="w-8 h-8 mr-2 text-blue-400" />
+    <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-4 flex flex-col h-[calc(100vh-7rem)]">
+      <h2 className="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-red-600 flex items-center">
+        <MessageCircle className="w-8 h-8 mr-2 text-orange-400" />
         Conversation Dialog
       </h2>
       <ChatDisplay chatData={chatData} />
@@ -49,13 +49,14 @@ export default function ConversationContainer() {
             placeholder="Type your message..."
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            className="w-full text-lg bg-black bg-opacity-50 border border-purple-500 text-white placeholder-purple-300 rounded-full px-4 py-2 pr-12"
+            className="w-full text-lg bg-transparent border border-red-500 border-opacity-50 text-gray-800 placeholder-gray-500 rounded-full px-4 py-2 pr-12"
             aria-label="Message input"
           />
           <Button
             type="submit"
-            className="absolute inset-y-0 right-2 text-purple-300 hover:text-purple-500 rounded-full p-2 flex items-center justify-center"
+            className="absolute inset-y-0 right-2 text-orange-500 hover:text-orange-300 rounded-full p-2 flex items-center justify-center"
             aria-label="Send message"
+            variant= "ghost"
           >
             <Send className="w-5 h-5" />
           </Button>

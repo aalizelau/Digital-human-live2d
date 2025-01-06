@@ -47,8 +47,8 @@ const ChatDisplay: React.FC<ChatDisplayProps> = ({ chatData }) => {
               transition={{ duration: 0.3 }}
               className={`mb-3 p-3 rounded-lg ${
                 message.isUser
-                  ? 'bg-blue-900 bg-opacity-50 text-blue-100 ml-4'
-                  : 'bg-purple-900 bg-opacity-50 text-purple-100 mr-4'
+                  ? 'bg-yellow-100 bg-opacity-50 text-yellow-800 ml-4'
+                  : 'bg-orange-100 bg-opacity-50 text-orange-800 mr-4'
               }`}
             >
               <strong>{message.isUser ? 'You: ' : 'Campus AI: '}</strong>

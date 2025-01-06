@@ -11,7 +11,7 @@ interface Message {
 const useVoiceAssistant = ()=>{
     const [isWaitingAIOutput,setIsWaitingAIOutput] = useState<boolean>(false)
     const [lastAIReplyURL,setLastAIReplyURL] = useState<string|undefined>(undefined)
-    const [selectedLanguage, setSelectedLanguage] = useState<string>("en-US"); //default language 
+    const [selectedLanguage, setSelectedLanguage] = useState<string>("en-GB"); //default language 
     const [chatData, setChatData] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
     const [mouthOpen, setMouthOpen] = useState(0);
