@@ -14,8 +14,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Script src="/library/live2d.min.js"> </Script>
-      <Script src="/library/live2dcubismcore.js"></Script>
+      <Script id="live2D_2" src="/library/live2d.min.js"> </Script>
+      <Script id="live2D_4" src="/library/live2dcubismcore.js"></Script>
       <VoiceAssistantProvider>
       <div className="md:h-screen flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <HeaderContainer/>
