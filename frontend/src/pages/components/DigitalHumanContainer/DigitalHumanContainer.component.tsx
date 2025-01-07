@@ -23,11 +23,14 @@ declare global {
 
 const DigitalHumanContainer =() => {
   const {
-  mouthOpen
+  mouthOpen, lastAIReplyURL
 } = useContext(VoiceAssistantContext);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null); // Initialize with null
   const modelRef = useRef<any>(null);
+  const hasStoppedMotions = useRef(false); // Track if motions have been stopped
+  const resumeMotionTimeout = useRef<NodeJS.Timeout | null>(null);
+
   
   // Run initialization logic after the component mounts
   useEffect(() => {
@@ -65,6 +68,7 @@ const DigitalHumanContainer =() => {
         // const url = "http://localhost:3000/shizuku_model/shizuku.model.json";
         const url = `${window.location.origin}/shizuku_model/shizuku.model.json`
         const model = await Live2DModel.from(url);
+        model.autoInteract= false
         
         // Add the model to the PIXI stage
         app.stage.addChild(model);
@@ -84,9 +88,37 @@ const DigitalHumanContainer =() => {
 
   useEffect(() => {
     if (modelRef.current) {
+      if (!hasStoppedMotions.current) {
+        // Stop motions once
+        modelRef.current.internalModel.motionManager.stopAllMotions();
+        modelRef.current.internalModel.motionManager.state.reservedIdleGroup = "idle";
+        modelRef.current.internalModel.motionManager.expressionManager.restoreExpression();
+        hasStoppedMotions.current = true; // Set flag
+      }
+      modelRef.current.expression(`f00`);
       modelRef.current.internalModel.coreModel.setParamFloat("PARAM_MOUTH_OPEN_Y", mouthOpen);
     }
+    // Clear any existing timeout
+    if (resumeMotionTimeout.current) {
+      clearTimeout(resumeMotionTimeout.current);
+    }
+
+    resumeMotionTimeout.current = setTimeout(() => {
+      if (modelRef.current) {
+        console.log("Resuming motions after 5 seconds of no mouth movement");
+        modelRef.current.internalModel.motionManager.expressionManager.resetExpression();
+        modelRef.current.internalModel.motionManager.state.reset();
+      }
+    }, 5000);
+
   }, [mouthOpen]); // trigger when there is an update of mouthOpen
+
+  // useEffect(() => {
+  //   if (modelRef.current) {
+  //     modelRef.current.internalModel.motionManager.expressionManager.resetExpression()
+  //     modelRef.current.internalModel.motionManager.state.reset()
+  //   }
+  // }, [lastAIReplyURL]);
 
   return (
     <div className="md:col-span-2 flex flex-col items-center justify-center bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 h-[calc(100vh-7rem)] overflow-hidden">

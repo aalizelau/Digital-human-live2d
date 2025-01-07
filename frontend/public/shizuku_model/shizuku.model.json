@@ -13,6 +13,7 @@
   "physics": "shizuku.physics.json",
   "pose": "shizuku.pose.json",
   "expressions": [
+    {"name": "f00", "file": "expressions/f00.exp.json"},
     {"name": "f01", "file": "expressions/f01.exp.json"},
     {"name": "f02", "file": "expressions/f02.exp.json"},
     {"name": "f03", "file": "expressions/f03.exp.json"},
