@@ -1,21 +1,22 @@
-# ChatCampus
+# Digital Human Live2D
 
-An AI-powered campus assistant to help users navigate academic life, answer questions, and access campus resources efficiently.
+This project focuses on creating interactive digital character models that run directly in the browser for easy access. By incorporating Live2D animations, users can engage in natural, conversational interactions enhanced by fluid motions and lifelike expressions, creating a truly immersive experience.
 
 ## Features
-- AI-driven conversational assistant
-- Academic and campus life Q&A
-- Resource navigation support
-- Easily customizable for specific institutions
+- **Supports Both Text and Audio Input** – Communicate via typing or speech.
+- **Multi-Language Support** – Available in English, Cantonese, and Mandarin.
+- **Character Customization** – Import custom Live2D models to give your AI companion a unique appearance. Shape your AI companion's persona by modifying the Prompt.
+- **Cursor Follow** – Character follows the mouse
+- **Lip-Syncing** – Character’s mouth movements dynamically match the audio volume.
+- **Good Extensibility** - Modular design allows easy integration of custom LLM, ASR, TTS, and other modules.
+- **In-Memory Vector Store** – Enables contextual memory retrieval for more personalized interactions.
 
-## Installation
+## Demo
+The demo shows a light-hearted conversation with a AI persona called Mikan who is adorable, curious and witty. 
+
+## Getting Started
 
 Follow the steps below to set up the project on your local machine.
-
-### Prerequisites
-- **Node.js** (v16+)
-- **npm** or **yarn**
-- **Python**
 
 ### Clone the Repository
 ```
@@ -40,7 +41,8 @@ git clone https://github.com/aalizelau/ChatCampus.git
    ```
 4. Configure environment variables:
 
-   Obtain your `GOOGLE_APPLICATION_CREDENTIALS` and `OPENAI_API_KEY` and set them as environment variables
+   - Create a Google Cloud Project with TTS Service enabled and download JSON credentials file.
+   - Obtain your `GOOGLE_APPLICATION_CREDENTIALS` and `OPENAI_API_KEY` and set them as environment variables
 5. Start the server:
 
    ```
