@@ -13,6 +13,8 @@ This project focuses on creating interactive digital character models that run d
 
 ## Demo
 The demo shows a light-hearted conversation with a AI persona called Mikan who is adorable, curious and witty. 
+https://www.youtube.com/watch?v=ogKkz-0_uYU
+
 [![Mikan Demo](https://github.com/user-attachments/assets/99227749-6bef-47aa-b95c-d9cdb8584f62)](https://www.youtube.com/watch?v=ogKkz-0_uYU)
 
 ## Getting Started
